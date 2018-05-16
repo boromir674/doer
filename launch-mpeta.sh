@@ -5,10 +5,11 @@ my_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 prepare-terminal MPETA
 
-cd ${git_root[$choice]}
+cd ${proj_root[$choice]}
 
 ## Do NOT modify the following section. It is managed by menu.sh, which injects code dynamically here.
 
 ## COMMANDS ##
-emacs $PROJECTS/knowfly/green-machine/green-web/app.py &
+emacs $DATA/thesis/code/pipeline.cfg >/dev/null 2>&1 &
+texmaker $DATA/thesis/report/intro/introduction.tex >/dev/null 2>&1 &
 ####

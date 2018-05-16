@@ -18,7 +18,7 @@ gnome-terminal -e "bash --rcfile $my_dir/launch-git.sh"
 wmctrl -r Terminal -N GIT
 gnome-terminal -e "bash --rcfile $my_dir/launch-mpeta.sh"
 wmctrl -r Terminal -N MPETA
-gnome-terminal -e "bash --rcfile $my_dir/launch-ipython2.sh"
+gnome-terminal -e "bash --rcfile $my_dir/launch-ipython3.sh"
 wmctrl -r Terminal -N IPYTHON
 gnome-terminal -e "bash --rcfile $my_dir/launch-server.sh"
 wmctrl -r Terminal -N SERVER

@@ -9,6 +9,7 @@ menu[1]=Thesis
 menu[2]=Cinema
 menu[3]="Green Web"
 menu[4]="Green Magic"
+menu[5]=Dmiliki
 
 # Define a 'choice => executable' hash
 declare -A execu
@@ -18,6 +19,7 @@ execu[1]="$pre-thesis.sh"
 execu[2]="$pre-cinema.sh"
 execu[3]="$pre-green-web.sh"
 execu[4]="$pre-green-magic.sh"
+execu[5]="$pre-dm.sh"
 
 # Define a 'choice => source control root directory' hash
 declare -A git_root
@@ -26,13 +28,22 @@ git_root[1]="$DATA/thesis/code"
 # git_root[2]=Cinema
 git_root[3]="$PROJECTS/knowfly/green-machine/green-web"
 git_root[4]="$PROJECTS/knowfly/green-machine/green-magic/"
+git_root[5]="$PROJECTS/dm/code"
+
+declare -A proj_root
+
+proj_root[1]="$DATA/thesis/"
+# proj_root[2]=Cinema
+proj_root[3]="$PROJECTS/knowfly/green-machine/green-web"
+proj_root[4]="$PROJECTS/knowfly/green-machine/green-magic/"
+proj_root[5]="$PROJECTS/dm/"
 
 # Define a terminal title-setter function
 # This value should correspond to a function most probably defined in a file such as ~/.bash_functions
 titlesetter=set-title
 
 # choice variable is set dynamically
-choice=3
+choice=1
 
 function prepare-terminal {
     # arg1: the desired terminal title

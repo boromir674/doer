@@ -7,4 +7,4 @@ prepare-terminal SERVER
 
 cd ${git_root[$choice]}
 
-python3 app.py
+python3 run-server.py

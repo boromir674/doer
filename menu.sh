@@ -32,9 +32,12 @@ echo 3. ${menu[3]}
 tput cup 10 15
 echo 4. ${menu[4]}
 
+tput cup 11 15
+echo 5. ${menu[5]}
+
 # Set bold mode
 tput bold
-tput cup 12 15
+tput cup 13 15
 read -p "Enter your choice [1-${#menu[@]}] " choice
 
 tput clear
