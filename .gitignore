@@ -1,1 +1,5 @@
 *.bak
+*\.pyc
+*__pycache__*
+generated_bash_scripts*
+\.idea
