@@ -43,7 +43,7 @@ proj_root[5]="$PROJECTS/dm/"
 titlesetter=set-title
 
 # choice variable is set dynamically
-choice=1
+choice=q
 
 function prepare-terminal {
     # arg1: the desired terminal title

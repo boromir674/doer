@@ -10,6 +10,5 @@ cd ${proj_root[$choice]}
 ## Do NOT modify the following section. It is managed by menu.sh, which injects code dynamically here.
 
 ## COMMANDS ##
-emacs $DATA/thesis/code/pipeline.cfg >/dev/null 2>&1 &
-texmaker $DATA/thesis/report/intro/introduction.tex >/dev/null 2>&1 &
+xdg-open $PROJECTS/dm/Vampire_The_Requiem_okular.pdf >/dev/null 2>&1 &
 ####

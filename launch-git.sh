@@ -7,6 +7,5 @@ prepare-terminal GIT
 
 cd ${git_root[$choice]}
 
-git branch
+git log --graph --all --oneline  --decorate | head -n25
 git status
-git diff --stat
