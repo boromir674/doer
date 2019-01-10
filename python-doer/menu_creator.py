@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+
 import os
 import re
 import json
@@ -56,7 +58,6 @@ class MenuRenderer:
         self._spawner = ScriptGenerator()
 
     def construct_menu(self, json_file):
-
         with open(json_file, 'r') as fp:
             res = json.load(fp, cls=RoundTripDecoder)
             menu = ConsoleMenu(res['title'], res['subtitle'])
