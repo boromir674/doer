@@ -23,8 +23,9 @@
             "texmaker /data/thesis/report/main.tex >/dev/null 2>&1 &",
             "emacs /data/thesis/code/patmtk/regularizers.cfg &",
             "emacs /data/thesis/code/patmtk/train.cfg &",
-            "emacs /data/thesis/code/pipeline.cfg &",
-            "source /data/thesis/scripts/add-aliases.sh"
+            "emacs /data/thesis/code/patmtk/pipeline.cfg &",
+            "source /data/thesis/scripts/add-aliases.sh",
+            "pycharm >/dev/null 2>&1 &"
           ]
         }
       ]
@@ -133,6 +134,29 @@
           "commands": [
             "pycharm >/dev/null 2>&1 &",
             "emacs /data/projects/python-custom-packages/pipes-n-processors/main.py &"
+          ]
+        }
+      ]
+    },
+
+    {
+      "_id": "album-creator",
+      "label": "Album creator",
+      "terminals": [
+        {
+          "type": "git",
+          "root": "/data/projects/music-album-creator"
+        },
+        {
+          "type": "ipython",
+          "root": "/data/projects/music-album-creator",
+          "interpreter_version": 3
+        },
+        {
+          "type": "mpeta",
+          "root": "/data/projects/music-album-creator",
+          "commands": [
+            "pycharm >/dev/null 2>&1 &"
           ]
         }
       ]
