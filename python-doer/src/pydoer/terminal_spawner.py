@@ -18,7 +18,11 @@ class ScriptGenerator:
 
     @classmethod
     def create_rc_file(cls, terminal_type, target_path, *args, global_rc_file_path=''):
-        cls.create_script_file(target_path, cls._common_commands(terminal_type.upper(), global_rc_file_path=global_rc_file_path) + cls.TERMINALS_CONFIG.get(terminal_type, cls.TERMINALS_CONFIG['mpeta'])(*args))
+        cls.create_script_file(
+            target_path,
+            cls._common_commands(
+                terminal_type.upper(),
+                global_rc_file_path=global_rc_file_path) + cls.TERMINALS_CONFIG.get(terminal_type, cls.TERMINALS_CONFIG['mpeta'])(*args))
 
     @staticmethod
     def _common_commands(terminal_title, global_rc_file_path=''):

@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 
+import sys
 import os
 import re
 import json
@@ -8,7 +9,7 @@ from consolemenu.items import *
 
 from functools import reduce
 
-from terminal_spawner import ScriptGenerator, BashCommand
+from src.terminal_spawner import ScriptGenerator, BashCommand
 
 #
 # # Create the menu
@@ -64,8 +65,11 @@ class MenuRenderer:
             for menu_dict in res['menu_entries']:
                 script_path = self._create_bash_script(menu_dict)
                 menu.append_item(CommandItem(menu_dict['label'], 'bash {}'.format(script_path)))
-            menu.show()
-
+            try:
+                menu.show()
+            except KeyboardInterrupt:
+                print('\nExiting..')
+                sys.exit(1)
 
     def _create_bash_script(self, entry_data):
         script_path = self._path(entry_data['_id'])
@@ -90,6 +94,20 @@ class MenuRenderer:
         return os.path.join(self._my_dir, 'do-{}.sh'.format(doer))
 
     def _commands(self, doer, terminal_type, try_rename_again=False):
+        """
+        Call this method to get a list of Bash commands:\n
+        'gnome-terminal -e "bash --rcfile doer-specific-rcfile"'\n
+        'set-title TERMINAL_TYPE'\n
+        if rename is try_rename_again is True, or\n
+        'gnome-terminal -e "bash --rcfile doer-specific-rcfile"'\n
+        if rename is try_rename_again is False\n\n
+        WARNING this method requires the set-title global bash function\n
+        :param str doer:
+        :param str terminal_type:
+        :param bool try_rename_again:
+        :return:
+        :rtype: list
+        """
         if try_rename_again:
             return [BashCommand.create('spawn-terminal', self._path(doer, launcher=terminal_type)),
                     BashCommand.create('rename-terminal', terminal_type.upper())]
