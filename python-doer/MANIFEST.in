@@ -1,0 +1,7 @@
+include README.rst
+
+graft src
+
+include src/doerrc
+
+global-exclude *.py[cod] __pycache__ *.so *.dylib
