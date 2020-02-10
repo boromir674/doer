@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python
 
 import sys
 import os
@@ -9,7 +9,7 @@ from consolemenu.items import *
 
 from functools import reduce
 
-from src.terminal_spawner import ScriptGenerator, BashCommand
+from .terminal_spawner import ScriptGenerator, BashCommand
 
 #
 # # Create the menu
@@ -125,7 +125,22 @@ class RoundTripDecoder(json.JSONDecoder):
         return obj
 
 
-if __name__ == '__main__':
-    mr = MenuRenderer(generated_scripts_directory='/data/tools/doer/python-doer/generated_bash_scripts')
+def main():
+    ll = [_ for _ in sys.argv]
+    print('argv', ll)
+    scripts_folder, json_path = ll[1:]
+    if not os.path.isdir(scripts_folder):
+        os.makedirs(scripts_folder)
+    mr = MenuRenderer(generated_scripts_directory=scripts_folder)
+    mr.construct_menu(json_path)
 
-    mr.construct_menu('/data/tools/doer/python-doer/menu_entries.json')
+
+if __name__ == '__main__':
+    main()
+    # ll = [_ for _ in sys.argv]
+    # print('argv', ll)
+    # main(*ll[1:])
+
+    #mr = MenuRenderer(generated_scripts_directory='/data/tools/doer/python-doer/generated_bash_scripts')
+
+    #mr.construct_menu('/data/tools/doer/python-doer/menu_entries.json')

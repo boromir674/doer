@@ -2,6 +2,6 @@ include README.rst
 
 graft src
 
-include src/doerrc
+include src/pydoer/doerrc
 
 global-exclude *.py[cod] __pycache__ *.so *.dylib
