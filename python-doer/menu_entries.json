@@ -20,12 +20,12 @@
           "type": "mpeta",
           "root": "/data/thesis",
           "commands": [
-            "texmaker /data/thesis/report/main.tex >/dev/null 2>&1 &",
-            "emacs /data/thesis/code/patmtk/regularizers.cfg &",
-            "emacs /data/thesis/code/patmtk/train.cfg &",
-            "emacs /data/thesis/code/patmtk/pipeline.cfg &",
+            "texmaker /data/thesis/report/tex/main.tex >/dev/null 2>&1 &",
+            "emacs /data/thesis/code/patmtk/regularizers.cfg --geometry 50x50+0+0 &",
+            "emacs /data/thesis/code/patmtk/train.cfg --geometry 60x45-0+75 &",
+            "emacs /data/thesis/code/patmtk/pipeline.cfg --geometry 25x25-0+0 &",
             "source /data/thesis/scripts/add-aliases.sh",
-            "pycharm >/dev/null 2>&1 &"
+            "~/launchers/pycharm.py /data/thesis/code/patmtk >/dev/null 2>&1 &"
           ]
         }
       ]
@@ -37,18 +37,14 @@
       "terminals": [
         {
           "type": "git",
-          "root": "/data/projects/knowfly/green-machine/green-magic"
-        },
-        {
-          "type": "ipython",
-          "root": "/data/projects/knowfly/green-machine/green-magic",
-          "interpreter_version": 3
+          "root": "/data/projects/knowfly/green-machine/green_magic"
         },
         {
           "type": "mpeta",
-          "root": "/data/projects/knowfly/green-machine/green-magic",
+          "root": "/data/projects/knowfly/green-machine/green_magic",
           "commands": [
-            "emacs /data/projects/knowfly/green-machine/green-magic/setup.py &"
+              "emacs /data/projects/knowfly/green-machine/green_magic/setup.py &",
+              "charm /data/projects/knowfly/green-machine/green_magic >/dev/null 2>&1 &"
           ]
         }
       ]
@@ -132,7 +128,7 @@
           "type": "mpeta",
           "root": "/data/projects/python-custom-packages/pipes-n-processors/",
           "commands": [
-            "pycharm >/dev/null 2>&1 &",
+            "~/launchers/pycharm.py /data/projects/python-custom-packages/pipes-n-processors >/dev/null 2>&1 &",
             "emacs /data/projects/python-custom-packages/pipes-n-processors/main.py &"
           ]
         }
@@ -156,7 +152,105 @@
           "type": "mpeta",
           "root": "/data/projects/music-album-creator",
           "commands": [
-            "pycharm >/dev/null 2>&1 &"
+            "~/launchers/pycharm.py /data/projects/music-album-creator >/dev/null 2>&1 &"
+          ]
+        }
+      ]
+    },
+
+    {
+      "_id": "oikonomika",
+      "label": "Oikonomika",
+      "terminals": [
+
+        {
+          "type": "mpeta",
+          "root": "/data/bureaucracy/ing",
+          "commands": [
+              "~/launchers/pycharm.py /data/bureaucracy/ing >/dev/null 2>&1 &",
+              "google-chrome https://docs.google.com/spreadsheets/u/0/ >/dev/null 2>&1 &"
+          ]
+        }
+      ]
+    },
+
+   {
+    "_id": "cv",
+    "label": "Curriculum Vitae",
+    "terminals": [
+      {
+        "type": "cv",
+        "root": "/data/personal-professional/CV",
+          "commands": [
+              "texmaker /data/personal-professional/CV/tex/resume/main.tex >/dev/null 2>&1 &",
+              "google-chrome https://docs.google.com/spreadsheets/d/1t94bANX3VZraKL_j73z4mT6TVpHd4mnbxJ0WOUZOGvY/edit#gid=904993333 >/dev/null 2>&1 &",
+              "xdg-open /data/personal-professional/CV/resume/jeyden-resume/main.pdf >/dev/null 2>&1 &",
+              "xdg-open /data/personal-professional/CV/Konstantinos_Lampridis_CV.pdf >/dev/null 2>&1 &",
+              "emacs /data/personal-professional/CV/purpose_of_cover_letter.org &",
+          "git status",
+          "git log --graph --all --oneline --decorate | head",
+          "git tag"
+        ]
+      }
+    ]
+   },
+
+         {
+    "_id": "psr",
+    "label": "Python Semantic Release",
+    "terminals": [
+      {
+        "type": "git",
+        "root": "/data/projects/python-semantic-release/"
+      },
+        {
+            "type": "psrmpeta",
+            "root": "/data/projects/python-semantic-release/",
+            "commands": [
+                "~/launchers/pycharm.py /data/projects/python-semantic-release >/dev/null 2>&1 &"
+            ]
+
+      }
+    ]
+         },
+   {
+    "_id": "neural-style-transfer",
+    "label": "Neural Style Transfer",
+    "terminals": [
+      {
+        "type": "git",
+        "root": "/data/projects/neural-style-transfer/"
+      },
+        {
+            "type": "neural-style-transfer",
+            "root": "/data/projects/neural-style-transfer/",
+            "commands": [
+                "source /data/projects/neural-style-transfer/env/bin/activate",
+                "~/launchers/pycharm.py /data/projects/neural-style-transfer/ >/dev/null 2>&1 &"
+            ]
+
+      }
+    ]
+   },
+
+       {
+      "_id": "green_machine",
+      "label": "Green Machine",
+      "terminals": [
+        {
+          "type": "git",
+          "root": "/data/projects/knowfly/green-machine/"
+        },
+        {
+          "type": "ipython",
+          "root": "/data/projects/knowfly/green-machine/",
+          "interpreter_version": 3
+        },
+        {
+          "type": "mpeta",
+          "root": "/data/projects/knowfly/green-machine/",
+          "commands": [
+              "charm /data/projects/knowfly/green-machine/ >/dev/null 2>&1 &"
           ]
         }
       ]

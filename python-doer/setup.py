@@ -12,6 +12,7 @@ src = 'src'
 name = 'pydoer'
 source_code_repo = ''
 changelog = '{}/blob/master/CHANGELOG.rst'.format(source_code_repo)
+description = 'A CLI application intending to automate spawning of terminals and launching processes in them.'
 
 
 def readme():
@@ -24,9 +25,9 @@ with open(os.path.join(my_dir, src, name, '__init__.py')) as f:
 
 
 setup(
-    name='pydoer',
+    name=name,
     version=_version,
-    description='A CLI application intending to automate spawning of terminals and launching processes in them.',
+    description=description,
     long_description=readme(),
     long_description_content_type='text/x-rst',
     keywords='automation terminal spawn',

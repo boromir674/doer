@@ -3,3 +3,7 @@
 *__pycache__*
 generated_bash_scripts*
 \.idea
+*\.egg-info
+\.tox
+dist
+py*-env

@@ -5,7 +5,7 @@ import os
 import re
 import json
 from consolemenu import *
-from consolemenu.items import *
+# from consolemenu.items import *
 
 from functools import reduce
 
@@ -40,7 +40,8 @@ from .terminal_spawner import ScriptGenerator, BashCommand
 # menu.append_item(submenu_item)
 
 # Finally, we call show to show the menu and allow the user to interact
-
+from consolemenu import ConsoleMenu
+from consolemenu.items import CommandItem
 
 class MenuRenderer:
     _entries = []
@@ -137,10 +138,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-    # ll = [_ for _ in sys.argv]
-    # print('argv', ll)
-    # main(*ll[1:])
-
-    #mr = MenuRenderer(generated_scripts_directory='/data/tools/doer/python-doer/generated_bash_scripts')
-
-    #mr.construct_menu('/data/tools/doer/python-doer/menu_entries.json')

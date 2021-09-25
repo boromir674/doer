@@ -1,7 +1,8 @@
 PYDOER - CLI Application
 =====================================
 
-PyDoer is a CLI application aiming to automate ...
+PyDoer is a CLI application aiming to automate executing multiple command in different
+terminal consoles.
 
 Featuring
 
