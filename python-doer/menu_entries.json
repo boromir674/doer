@@ -179,14 +179,17 @@
     "label": "Curriculum Vitae",
     "terminals": [
       {
-        "type": "cv",
-        "root": "/data/personal-professional/CV",
+        "type": "mpeta",
+        "root": "/data/repos/cv",
           "commands": [
-              "texmaker /data/personal-professional/CV/tex/resume/main.tex >/dev/null 2>&1 &",
-              "google-chrome https://docs.google.com/spreadsheets/d/1t94bANX3VZraKL_j73z4mT6TVpHd4mnbxJ0WOUZOGvY/edit#gid=904993333 >/dev/null 2>&1 &",
-              "xdg-open /data/personal-professional/CV/resume/jeyden-resume/main.pdf >/dev/null 2>&1 &",
-              "xdg-open /data/personal-professional/CV/Konstantinos_Lampridis_CV.pdf >/dev/null 2>&1 &",
-              "emacs /data/personal-professional/CV/purpose_of_cover_letter.org &",
+            "xhost +",
+            "docker start -ai texmaker-app"
+        ]
+      },
+      {
+        "type": "cv",
+        "root": "/data/repos/cv",
+          "commands": [
           "git status",
           "git log --graph --all --oneline --decorate | head",
           "git tag"

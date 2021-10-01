@@ -46,7 +46,7 @@ setup(
     zip_safe=False,
 
     # what packages/distributions (python) need to be installed when this one is. (Roughly what is imported in source code)
-    install_requires=['console-menu'],
+    install_requires=['console-menu', 'attrs', 'click'],
 
     # A string or list of strings specifying what other distributions need to be present in order for the setup script to run.
     # (Note: projects listed in setup_requires will NOT be automatically installed on the system where the setup script is being run.
@@ -95,7 +95,8 @@ setup(
     # },
     entry_points={
         'console_scripts': [
-            'pydoer = pydoer.menu_creator:main',
+            # 'pydoer = pydoer.menu_creator:main',
+            'pydoer = pydoer.menu_creator:cli',
         ]
     },
     # A dictionary mapping names of "extras" (optional features of your project: eg imports that a console_script uses) to strings or lists of strings

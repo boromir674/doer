@@ -7,3 +7,4 @@ generated_bash_scripts*
 \.tox
 dist
 py*-env
+*windows_opened_by_doer.txt

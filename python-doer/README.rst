@@ -1,14 +1,15 @@
 PYDOER - CLI Application
 =====================================
 
-PyDoer is a CLI application aiming to automate executing multiple command in different
+PyDoer is a CLI application aiming to automate executing multiple commands in different
 terminal consoles.
 
 
 Featuring
 
-- blah blah
-- kai blah blah
+- Terminal Configuration as code
+- Design Menu and commands using json config
+- Launch/Close commands
 
 
 ========
@@ -20,7 +21,7 @@ Overview
 Prerequisites
 =============
 
-You need to have Python, Perl and Bash installed.
+You need to have Python, Bash and gnome-terminal installed.
 
 Installation
 ============
@@ -29,25 +30,37 @@ Installation
 To install the PyDoer:
 
 1. Get the code
-2. Navigate in the the 'python-doer' directory in the project's root folder
+
+    git clone git@github.com/boromir674/pydoer.git
+
+2. Navigate in the 'python-doer' directory in the project's root folder
 3. Install python 'pydoer' package and cli command by running (better inside a virtual env; ie using virtualenv):
+
+From a virtual environment:
 
 ::
 
-    pip install pydoer
+    pip install .
 
-4. Define recommended aliases
+or else you could install in the "user space" with
 
-Assuming you cloned the code in directory '/data/repos/doer'
+    python3 -m pip install --user .
 
-    alias doer='pydoer /data/tools/doer/python-doer/generated_bash_scripts /data/tools/doer/python-doer/menu_entries.json'
-    alias close-doing='perl /data/tools/doer/close-doing.pm'
+4a. Define useful aliases
 
+    Assuming you cloned the code in directory '/data/repos/doer'
+
+    alias doer='/data/repos/doer/env/bin/pydoer menu /data/tools/doer/python-doer/menu_entries.json'
+    alias close-doing='/data/repos/doer/env/bin/pydoer close-doing'
+
+4b. Define usuful symbolic link
+
+    sudo ls -s /data/repos/doer/env/bin/pydoer /usr/local/bin/pydoer
 
 Usage
 =====
 
-To run, simply execute::
+To run, simply execute (either from within the virtual env or if you installed with user/global scope):
 
     pydoer
 
