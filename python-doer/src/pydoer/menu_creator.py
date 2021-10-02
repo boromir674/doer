@@ -112,36 +112,50 @@ class MyCommandItem(CommandItem):
         super().__init__(text, command, arguments=arguments, menu=menu, should_exit=should_exit)
         self.subject = subject if subject is not None else Subject()
 
+    def update_state(self):
+        windows_after = find_open_windows()
+        if windows_after is None:
+            raise RuntimeError
+
+        nb_new_windows = len(windows_after) - len(self.subject.windows)
+        assert nb_new_windows > 0
+        assert all([x == windows_after[i] for i, x in enumerate(self.subject.windows)])
+        new_windows = windows_after[-nb_new_windows:]
+        self.subject.state = new_windows
+
     def action(self):
         # Before we execute the command we find out the currently open windows
-        windows = find_open_windows()
-        if windows is None:
+        self.subject.windows = find_open_windows()
+        if self.subject.windows is None:
             raise RuntimeError
         super().action()
-
+        
         # todo measure time here
         # and noti'fy of newly spawned windows on another event to avoid sleeping immediately here
         # in other words do a lazy notification to avoid sleeping here
         sleep(2.0)
 
-        windows_after = find_open_windows()
-        if windows is None:
-            raise RuntimeError
-
-        nb_new_windows = len(windows_after) - len(windows)
-        assert nb_new_windows > 0
-        assert all([x == windows_after[i] for i, x in enumerate(windows)])
-        new_windows = windows_after[-nb_new_windows:]
-        self.subject.state = new_windows
+        self.update_state()        
         self.subject.notify()
+
+
+
+@attr.s
+class MenuListener(Observer):
+    prev_chosen = attr.ib(default=None)
+    
+    def update(self, *args, **kwargs) -> None:
+        choice = args[0].state
+        self.prev_chosen = choice
 
 
 class MenuRenderer:
     _entries = []
     __my_dir = os.path.dirname(os.path.realpath(__file__))
 
-    def __init__(self, terminal_spawn_listener, doer_rc_file='', generated_scripts_directory=''):
+    def __init__(self, terminal_spawn_listener, menu_selection_listener, doer_rc_file='', generated_scripts_directory=''):
         self.terminal_spawn_listener = terminal_spawn_listener
+        self.menu_selection_listener = menu_selection_listener
         if not doer_rc_file:
             doer_rc_file = os.path.join(self.__my_dir, 'doerrc')
         if not os.path.isfile(doer_rc_file):
@@ -162,9 +176,11 @@ class MenuRenderer:
                 menu.append_item(MyCommandItem(menu_dict['label'], 'bash {}'.format(script_path)))
                 item = menu.items[-1]
                 item.subject.attach(self.terminal_spawn_listener)
+                item.subject.attach(self.menu_selection_listener)
             try:
                 menu.show()
             except KeyboardInterrupt:
+
                 print('\nExiting..')
                 sys.exit(1)
 
@@ -254,10 +270,12 @@ def menu(json_path, scripts_dir):
                   '* pass in a directory using parameter flag -sd or --scripts-dir, where the code will have the necessary permissions to read/write')
             sys.exit(1)
 
+    menu_selection_listener = MenuListener()
     terminal_spawn_listener = SpawnListener(win_manager)
 
     mr = MenuRenderer(
         terminal_spawn_listener=terminal_spawn_listener,
+        menu_selection_listener=menu_selection_listener,
         generated_scripts_directory=scripts_dir
     )
     mr.construct_menu(json_path)
