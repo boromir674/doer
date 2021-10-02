@@ -3,7 +3,6 @@
 import os
 import sys
 import json
-# import errno
 from time import sleep
 import subprocess
 from typing import List

@@ -8,6 +8,16 @@
       "label": "Douleia",
       "terminals": [
         {
+          "type": "texmaker-app",
+          "root": "/data/repos/cv",
+            "commands": [
+              "xdg-open /data/repos/cv/tex/resume/main.pdf",
+              "code .",
+              "xhost +",
+              "docker start -ai texmaker-app"
+          ]
+        },
+        {
           "type": "douleia",
           "root": "/data/repos/cv",
           "commands": [
@@ -189,15 +199,17 @@
     "label": "Curriculum Vitae",
     "terminals": [
       {
-        "type": "mpeta",
+        "type": "cv-maker",
         "root": "/data/repos/cv",
           "commands": [
+            "xdg-open /data/repos/cv/tex/resume/main.pdf",
+            "code .",
             "xhost +",
             "docker start -ai texmaker-app"
         ]
       },
       {
-        "type": "cv",
+        "type": "cv-git",
         "root": "/data/repos/cv",
           "commands": [
           "git status",
