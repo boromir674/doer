@@ -1,7 +1,7 @@
 *.bak
 *\.pyc
 *__pycache__*
-*generate_bash_scripts*
+*generated_bash_scripts*
 \.idea
 *\.egg-info
 \.tox
