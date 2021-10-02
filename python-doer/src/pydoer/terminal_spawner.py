@@ -1,23 +1,14 @@
 import os
+from typing import List, Union
 import sys
 from time import sleep
 
-from .commands import CommandsBuilder, cmd
+from .commands import CommandsBuilder, cmd, BashCommand
+
+source_command_type = Union[BashCommand, None]
 
 
 class ScriptGenerator:
-    
-    # PREDEFINED_COMMANDS = {
-    #     'git': CommandsBuilder.subclasses['git'],
-    #     'ipython': CommandsBuilder.subclasses['ipython'],
-    #     'mpeta': CommandsBuilder.subclasses['mpeta'],
-    # }
-    
-    # TERMINALS_CONFIG = {
-    #     'git': lambda git_root: [cmd('cd', git_root), cd('arbitrary-command', 'git status')],
-    #     'ipython': lambda working_directory, interpreter_version: [cmd('cd', working_directory), IPythonCommand(interpreter_version)],
-    #     'mpeta': lambda commands_list: commands_list
-    # }
 
     @staticmethod
     def create_script_file(file_path, commands):
@@ -49,29 +40,39 @@ class ScriptGenerator:
         """
         cls.create_script_file(
             target_path,
-            cls._common_commands(
+            list(cls._common_commands(
                 terminal_type.upper(),
-                global_rc_file_path=global_rc_file_path) + \
+                global_rc_file_path=global_rc_file_path)) + \
                 CommandsBuilder.subclasses.get(terminal_type, CommandsBuilder.subclasses['mpeta']).build_commands(*args))
-                # cls.PREDEFINED_COMMANDS.get(terminal_type, cls.PREDEFINED_COMMANDS.get('mpeta')).build_commands(*args))
-                # cls.TERMINALS_CONFIG.get(terminal_type, cls.TERMINALS_CONFIG['mpeta'])(*args))
 
-    @staticmethod
-    def _common_commands(terminal_title, global_rc_file_path=''):
-        """Create a list of strings, each of which represents a valid shell command on separate lines.
+    @classmethod
+    def _common_commands(cls, terminal_title, global_rc_file_path=''):
+        """Create shell commands that are common for all 'launch-scripts'
+
+        Creates a list of strings, each of which represents a valid shell command when put on separate lines
+        in a file script.
 
         The list of commands include
             1. a banshee string: !#/bin/bash
-            2. (Optional) a command to "source" a file: eg source /path/to/.bashrc
-            3. a command to change the terminal window title, as it appears in the window upper header
+            2. a command to change the terminal window title, as it appears in the window upper header
 
         Args:
             terminal_title (str): the title to use as the terminal's window title
             global_rc_file_path (str, optional): path to a file suitable to "source". Defaults to ''.
 
         Returns:
-            list: list of strings each of which is a valid line representing a shell command
+            list: list of strings each of which is a line representing a valid shell command
         """
-        if os.path.isfile(global_rc_file_path):
-            return ['#!/bin/bash', cmd('source', global_rc_file_path), cmd('set-terminal-title', terminal_title)]
-        return ['#!/bin/bash', cmd('set-terminal-title', terminal_title)]
+        return filter(None, ['#!/bin/bash', cls._source_command(global_rc_file_path), cmd('set-terminal-title', terminal_title)])
+
+    def _source_command(shell_script_file_path: str) -> source_command_type:
+        """Get a Source Command instance; object that represents a "source /path/to/file" shell command.
+
+        Args:
+            shell_script_file_path (str): path to file to source
+
+        Returns:
+            source_command_type: [description]
+        """
+        if os.path.isfile(shell_script_file_path):
+            return cmd('source', shell_script_file_path)

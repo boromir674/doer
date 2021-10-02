@@ -8,7 +8,7 @@ import attr
 __all__ = ['Window']
 
 
-@attr.s
+@attr.s(eq=False)
 class Window:
     """Represents an open (running) window.
 
@@ -66,3 +66,8 @@ def find_open_windows() -> List[Window]:
 
 if __name__ == '__main__':
     print(find_open_windows())
+
+    w1 = Window('123', 'Title_A')
+    w2 = Window('123', 'Title_B')
+
+    print(w1 == w2)

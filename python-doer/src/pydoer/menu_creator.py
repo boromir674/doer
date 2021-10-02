@@ -120,11 +120,15 @@ class MyCommandItem(CommandItem):
             raise RuntimeError
         super().action()
 
-        sleep(1)
+        # todo measure time here
+        # and noti'fy of newly spawned windows on another event to avoid sleeping immediately here
+        # in other words do a lazy notification to avoid sleeping here
+        sleep(2.0)
 
         windows_after = find_open_windows()
         if windows is None:
             raise RuntimeError
+
         nb_new_windows = len(windows_after) - len(windows)
         assert nb_new_windows > 0
         assert all([x == windows_after[i] for i, x in enumerate(windows)])
@@ -179,7 +183,10 @@ class MenuRenderer:
                 if 'root' in terminal_data:
                     arguments[0] = [cmd('cd', terminal_data['root'])] + arguments[0]
             else:
-                arguments = [_ for _ in [terminal_data.get('root', None), terminal_data.get('interpreter_version', None)] if _]
+                if terminal_data['type'] not in ('git' 'ipython'):
+                    arguments = [[cmd('cd', terminal_data['root'])]]
+                else:
+                    arguments = [_ for _ in [terminal_data.get('root', None), terminal_data.get('interpreter_version', None)] if _]
             # Create script that should run on a newly spawned terminal. This script acts a step to setup the terminal
             self._spawner.create_rc_file(terminal_data['type'], self._path(entry_data['_id'],
                 launcher=terminal_data['type']), *arguments, global_rc_file_path=self._doer_rc_file)
@@ -252,8 +259,6 @@ def menu(json_path, scripts_dir):
 
 if __name__ == '__main__':
     cli()
-
-
 
 
 
