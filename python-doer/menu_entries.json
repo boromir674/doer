@@ -4,6 +4,22 @@
   "menu_entries": [
 
     {
+      "_id": "douleia",
+      "label": "Douleia",
+      "terminals": [
+        {
+          "type": "douleia",
+          "root": "/data/repos/cv",
+          "commands": [
+            "brave-browser --new-window cord.co",
+            "brave-browser https://www.linkedin.com/",
+            "brave-browser https://docs.google.com/spreadsheets/d/14t0S5dP3oKuZijPk11oTUIEoIAFPVzBtCCV8SKl9Ypk/edit#gid=0"
+          ]
+        }
+      ]
+    },
+
+    {
       "_id": "thesis",
       "label": "Thesis",
       "terminals": [
@@ -32,49 +48,85 @@
     },
 
     {
-      "_id": "green_magic",
-      "label": "Green Magic",
+      "_id": "so_magic",
+      "label": "So Magic",
       "terminals": [
         {
           "type": "git",
-          "root": "/data/projects/knowfly/green-machine/green_magic"
+          "root": "/data/repos/so-magic"
         },
         {
           "type": "mpeta",
-          "root": "/data/projects/knowfly/green-machine/green_magic",
+          "root": "/data/repos/so-magic",
           "commands": [
-              "emacs /data/projects/knowfly/green-machine/green_magic/setup.py &",
-              "charm /data/projects/knowfly/green-machine/green_magic >/dev/null 2>&1 &"
+              "code ."
+          ]
+        },
+        {
+          "type": "deploy",
+          "root": "/data/repos/so-magic",
+          "commands": [
+              "printenv | grep SO_MAGIC"
           ]
         }
       ]
     },
 
     {
-      "_id": "green_web",
-      "label": "Green Web",
+      "_id": "so_magic_api",
+      "label": "So Magic API",
       "terminals": [
         {
           "type": "git",
-          "root": "/data/projects/knowfly/green-machine/green-web"
-        },
-        {
-          "type": "ipython",
-          "root": "/data/projects/knowfly/green-machine/green-web",
-          "interpreter_version": 3
+          "root": "/data/repos/so-magic-api"
         },
         {
           "type": "mpeta",
-          "root": "/data/projects/knowfly/green-machine/green-web",
+          "root": "/data/repos/so-magic-api",
           "commands": [
-            "emacs /data/projects/knowfly/green-machine/green-web/run-server.py &"
+            "code ."
           ]
         },
         {
           "type": "server",
-          "root": "/data/projects/knowfly/green-machine/green-web",
+          "root": "/data/repos/so-magic-api",
           "commands": [
-            "python3 run-server.py"
+            "source env/bin/activate",
+            "python run-server.py"
+          ]
+        }
+      ]
+    },
+
+    {
+      "_id": "so_magic_frontend",
+      "label": "So Magic Frontend",
+      "terminals": [
+        {
+          "type": "git",
+          "root": "/data/repos/so-magic-frontend"
+        },
+        {
+          "type": "mpeta",
+          "root": "/data/repos/so-magic-frontend",
+          "commands": [
+            "code ."
+          ]
+        },
+        {
+          "type": "sm-frontend-server",
+          "root": "/data/repos/so-magic-frontend",
+          "commands": [
+            "npm start"
+          ]
+        },
+        {
+          "type": "sm-frontend-test",
+          "root": "/data/repos/so-magic-frontend",
+          "commands": [
+            "npm test -- --watchAll=false",
+            "echo You can invoke the test runner to watch for file changes, with interactive mode",
+            "echo run: npm test"
           ]
         }
       ]
@@ -94,65 +146,23 @@
     },
 
     {
-      "_id": "dm",
-      "label": "Dmiliki",
-      "terminals": [
-        {
-          "type": "git",
-          "root": "/data/projects/dm/code"
-        },
-        {
-          "type": "mpeta",
-          "root": "/data/projects/dm/",
-          "commands": [
-            "xdg-open /data/projects/dm/Vampire_The_Requiem_okular.pdf >/dev/null 2>&1 &"
-          ]
-        }
-      ]
-    },
-
-    {
-      "_id": "pipes-n-processors",
-      "label": "Pipes n Processors",
-      "terminals": [
-        {
-          "type": "git",
-          "root": "/data/projects/python-custom-packages/pipes-n-processors/"
-        },
-        {
-          "type": "ipython",
-          "root": "/data/projects/python-custom-packages/pipes-n-processors/",
-          "interpreter_version": 3
-        },
-        {
-          "type": "mpeta",
-          "root": "/data/projects/python-custom-packages/pipes-n-processors/",
-          "commands": [
-            "~/launchers/pycharm.py /data/projects/python-custom-packages/pipes-n-processors >/dev/null 2>&1 &",
-            "emacs /data/projects/python-custom-packages/pipes-n-processors/main.py &"
-          ]
-        }
-      ]
-    },
-
-    {
       "_id": "album-creator",
-      "label": "Album creator",
+      "label": "Music Album creator",
       "terminals": [
         {
           "type": "git",
-          "root": "/data/projects/music-album-creator"
+          "root": "/data/repos/music-album-creator"
         },
         {
           "type": "ipython",
-          "root": "/data/projects/music-album-creator",
+          "root": "/data/repos/music-album-creator",
           "interpreter_version": 3
         },
         {
           "type": "mpeta",
-          "root": "/data/projects/music-album-creator",
+          "root": "/data/repos/music-album-creator",
           "commands": [
-            "~/launchers/pycharm.py /data/projects/music-album-creator >/dev/null 2>&1 &"
+            "code ."
           ]
         }
       ]
@@ -167,8 +177,8 @@
           "type": "mpeta",
           "root": "/data/bureaucracy/ing",
           "commands": [
-              "~/launchers/pycharm.py /data/bureaucracy/ing >/dev/null 2>&1 &",
-              "google-chrome https://docs.google.com/spreadsheets/u/0/ >/dev/null 2>&1 &"
+              "code .",
+              "brave-browser https://docs.google.com/spreadsheets/u/0/ >/dev/null 2>&1 &"
           ]
         }
       ]
@@ -198,66 +208,24 @@
     ]
    },
 
-         {
+  {
     "_id": "psr",
     "label": "Python Semantic Release",
     "terminals": [
       {
-        "type": "git",
-        "root": "/data/projects/python-semantic-release/"
+        "type": "psr-git",
+        "root": "/data/repos/python-semantic-release/"
       },
         {
-            "type": "psrmpeta",
-            "root": "/data/projects/python-semantic-release/",
+            "type": "psr-mpeta",
+            "root": "/data/repos/python-semantic-release/",
             "commands": [
-                "~/launchers/pycharm.py /data/projects/python-semantic-release >/dev/null 2>&1 &"
+                "code ."
             ]
 
       }
     ]
-         },
-   {
-    "_id": "neural-style-transfer",
-    "label": "Neural Style Transfer",
-    "terminals": [
-      {
-        "type": "git",
-        "root": "/data/projects/neural-style-transfer/"
-      },
-        {
-            "type": "neural-style-transfer",
-            "root": "/data/projects/neural-style-transfer/",
-            "commands": [
-                "source /data/projects/neural-style-transfer/env/bin/activate",
-                "~/launchers/pycharm.py /data/projects/neural-style-transfer/ >/dev/null 2>&1 &"
-            ]
-
-      }
-    ]
-   },
-
-       {
-      "_id": "green_machine",
-      "label": "Green Machine",
-      "terminals": [
-        {
-          "type": "git",
-          "root": "/data/projects/knowfly/green-machine/"
-        },
-        {
-          "type": "ipython",
-          "root": "/data/projects/knowfly/green-machine/",
-          "interpreter_version": 3
-        },
-        {
-          "type": "mpeta",
-          "root": "/data/projects/knowfly/green-machine/",
-          "commands": [
-              "charm /data/projects/knowfly/green-machine/ >/dev/null 2>&1 &"
-          ]
-        }
-      ]
-    }
+  }
 
   ]
 }
