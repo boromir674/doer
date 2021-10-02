@@ -23,6 +23,9 @@ def readme():
 with open(os.path.join(my_dir, src, name, '__init__.py')) as f:
     _version = re.search(r'^__version__\s*=\s*[\'"]([^\'"]*)[\'"]', f.read(), re.MULTILINE).group(1)
 
+with open(os.path.join(my_dir, 'requirements.txt'), 'r') as f:
+    requirements = [python_package.strip() for python_package in f.readlines()]
+
 
 setup(
     name=name,
@@ -46,7 +49,7 @@ setup(
     zip_safe=False,
 
     # what packages/distributions (python) need to be installed when this one is. (Roughly what is imported in source code)
-    install_requires=['console-menu', 'attrs', 'click'],
+    install_requires=requirements,  # ['console-menu', 'attrs', 'click'],
 
     # A string or list of strings specifying what other distributions need to be present in order for the setup script to run.
     # (Note: projects listed in setup_requires will NOT be automatically installed on the system where the setup script is being run.
