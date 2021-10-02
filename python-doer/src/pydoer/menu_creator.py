@@ -25,7 +25,7 @@ from .windows import find_open_windows,Window
 my_dir = os.path.dirname(os.path.realpath(__file__))
 persist_file_name = '.windows_opened_by_doer.txt'
 
-bash_scripts_dir_path = os.path.join(my_dir, '..', 'generate_bash_scripts')
+bash_scripts_dir_path = os.path.join(my_dir, 'generated_bash_scripts')
 
 
 @attr.s
@@ -245,7 +245,14 @@ def close_doing():
 @click.option('-sd', '--scripts-dir', default=bash_scripts_dir_path, help='define your custom location to store the generated bash files')
 def menu(json_path, scripts_dir):
     if not os.path.isdir(scripts_dir):
-        os.makedirs(scripts_dir)
+        try:
+            os.makedirs(scripts_dir)
+        except Exception as e:
+            print(e)
+            print('You can try the following:\n'
+                  '* install pydoer in a location that the code will have permission to create a directory (eg using the --user flag with pip install\n'
+                  '* pass in a directory using parameter flag -sd or --scripts-dir, where the code will have the necessary permissions to read/write')
+            sys.exit(1)
 
     terminal_spawn_listener = SpawnListener(win_manager)
 
