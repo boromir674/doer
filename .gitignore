@@ -10,3 +10,5 @@ py*-env
 *windows_opened_by_doer.txt
 \.vscode
 */build/*
+*\.coverage
+*test-results
