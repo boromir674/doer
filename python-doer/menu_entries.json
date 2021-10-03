@@ -30,6 +30,26 @@
     },
 
     {
+      "_id": "python-doer",
+      "label": "PyDoer",
+      "terminals": [
+        {
+          "type": "git",
+          "root": "/data/repos/doer"
+        },
+
+        {
+          "type": "mpeta",
+          "root": "/data/repos/doer",
+          "commands": [
+            "code .",
+            "emacs python-doer/menu_entries.json &"
+          ]
+        }
+      ]
+    },
+
+    {
       "_id": "thesis",
       "label": "Thesis",
       "terminals": [
