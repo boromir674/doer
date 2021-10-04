@@ -135,7 +135,7 @@ jobs:
       - run:
           name: Install tox automation tool
           command: python -m pip install --user tox
-      -run: cd python-doer
+      - run: cd python-doer
       - run:
           name: Visualize dependency graphs as .svg files
           command: python -m tox -e graphs -vv
