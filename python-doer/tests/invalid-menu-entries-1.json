@@ -1,0 +1,36 @@
+{
+    "title": "DOER",
+    "subtitle": "Do it, do it now!",
+    "menu_entries": [
+  
+      {
+        "_id": "python-doer",
+        "label": "PyDoer",
+        "terminals": [
+          {
+            "type": "git",
+            "root": "/data/repos/doer"
+          },
+  
+          {
+            "type": "mpeta",
+            "root": "/data/repos/doer",
+            "commands": [
+              "code .",
+              "emacs python-doer/menu_entries.json &"
+            ]
+          }
+        ]
+      },
+
+      {
+        "_id": "invalid-menu-item",
+        "label": "invalid_menu_item",
+        "terminals": [
+          
+        ]
+      }
+  
+    ]
+  }
+  

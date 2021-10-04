@@ -1,7 +1,18 @@
 include README.rst
+include CHANGELOG.rst
+include LICENSE
+
+global-exclude *.py[cod] __pycache__ *.so *.dylib
+
+# Python modules/files
 
 graft src
 
-include src/pydoer/doerrc
+recursive-include tests *.py
+include tests/invalid-menu-entries-1.json
 
-global-exclude *.py[cod] __pycache__ *.so *.dylib
+
+include src/pydoer/doerrc
+include requirements.txt
+include .coveragerc
+include tox.ini
