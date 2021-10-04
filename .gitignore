@@ -12,3 +12,4 @@ py*-env
 */build/*
 *\.coverage
 *test-results
+*pydoer-dependency-graphs/
