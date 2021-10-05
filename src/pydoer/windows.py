@@ -70,10 +70,6 @@ def find_open_windows() -> List[Window]:
     """
     command_args = ['wmctrl',  '-lx']
     child_process = subprocess.run(command_args, capture_output=True)
-    print('------------------------------------------')
-    print(child_process.stdout)
-    print('------------------------------------------')
     if child_process.returncode != 0:
-        print(child_process.stderr)
-        raise RuntimeError(f"Command '{' '.join(command_args)}' exited with non-zero status. Stderr: {child_process.stderr}")
+        raise RuntimeError(f"Command '{' '.join(command_args)}' exited with non-zero status. Stderr: {child_process.stderr.decode().strip()}")
     return [Window.from_wmctrl(window_string) for window_string in child_process.stdout.decode().strip().split('\n')]
