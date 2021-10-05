@@ -61,8 +61,7 @@ class PersistanceManager:
 
 @attr.s
 class WindowsManager:
-    """Store information about opened windows.
-    """
+    """Store information about opened windows."""
     persistance = attr.ib(default=attr.Factory(PersistanceManager))
     windows = attr.ib(default=attr.Factory(dict))  # last opened group of windows from single doer choice
 
@@ -89,7 +88,7 @@ class WindowsManager:
         windows = [Window.decode(window_string) for window_string in self.persistance.iter_windows()]
         for window in windows:
             print(f"Closing '{window.id}' window: {window.title}")
-            child_process = subprocess.run(['wmctrl',  '-ic', window.id], capture_output=True)
+            _child_process = subprocess.run(['wmctrl',  '-ic', window.id], capture_output=True)
         self.persistance.flush()
 
 
@@ -137,10 +136,19 @@ class MyCommandItem(CommandItem):
 
 
 class MenuRenderer:
-    _entries = []
     __my_dir = os.path.dirname(os.path.realpath(__file__))
 
-    def __init__(self, terminal_spawn_listener, doer_rc_file='', generated_scripts_directory=''):
+    def __init__(self, terminal_spawn_listener: Observer, doer_rc_file='', generated_scripts_directory=''):
+        """[summary]
+
+        Args:
+            terminal_spawn_listener (Observer): an object with an 'update' method that can handle newly observed windows
+            doer_rc_file (str, optional): file that act similarly to a ~/.bashrc file. Defaults to ''.
+            generated_scripts_directory (str, optional): the location to store the dynamically generated scripts. Defaults to ''.
+
+        Raises:
+            ValueError: [description]
+        """
         self.terminal_spawn_listener = terminal_spawn_listener
         if not doer_rc_file:
             doer_rc_file = os.path.join(self.__my_dir, 'doerrc')
@@ -169,7 +177,8 @@ class MenuRenderer:
                 sys.exit(1)
 
     def _create_bash_script(self, entry_data):
-        """Create a 'do' shell script.
+        """
+        Create a 'do' shell script.
 
         A 'do' script, when executed, spawns one or more terminal applications.
 
@@ -180,7 +189,7 @@ class MenuRenderer:
             str: path of the shell script stored in the disk
         """
         script_path = self._path(entry_data['_id'])
-        # create script that spawns a new terminal, upon execution
+        # create a 'do' script that spawns a new terminal, upon execution
         self._spawner.create_script_file(script_path,
                                          reduce(lambda i, j: i + j,
                                                 [self._commands(entry_data['_id'], terminal_type, try_rename_again=True)
@@ -196,7 +205,7 @@ class MenuRenderer:
                     arguments = [[cmd('cd', terminal_data['root'])]]
                 else:
                     arguments = [_ for _ in [terminal_data.get('root', None), terminal_data.get('interpreter_version', None)] if _]
-            # Create script that should run on a newly spawned terminal. This script acts a step to setup the terminal
+            # Create a 'launch' script that should run on a newly spawned terminal. This script acts a step to setup the terminal
             self._spawner.create_rc_file(terminal_data['type'], self._path(entry_data['_id'],
                 launcher=terminal_data['type']), *arguments, global_rc_file_path=self._doer_rc_file)
         return script_path

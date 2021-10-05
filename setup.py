@@ -2,7 +2,7 @@ import os
 import re
 from collections import OrderedDict
 
-from setuptools import find_packages, setup
+from setuptools import setup
 
 my_dir = os.path.dirname(os.path.realpath(__file__))
 

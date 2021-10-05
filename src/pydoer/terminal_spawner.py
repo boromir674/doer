@@ -1,6 +1,5 @@
 import os
 from typing import List, Union
-import sys
 from time import sleep
 
 from .commands import CommandsBuilder, cmd, BashCommand

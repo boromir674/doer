@@ -39,7 +39,7 @@ class Window:
 
     ## Encode/Decode functionality
     SPLIT = ' --> '
-    
+
     @classmethod
     def encode(cls, window) -> str:
         return f'{window.id}{cls.SPLIT}{window.title}'
@@ -67,8 +67,8 @@ def find_open_windows() -> List[Window]:
     Returns:
         List[Window]: [description]
     """
-    command_args = ['wmctrl',  '-lx']
-    child_process = subprocess.run(command_args, capture_output=True)
+    command_args = ('wmctrl',  '-lx')
+    child_process = subprocess.run(list(command_args), capture_output=True)
     if child_process.returncode != 0:
         raise RuntimeError(f"Command '{' '.join(command_args)}' exited with non-zero status. Stderr: {child_process.stderr.decode().strip()}")
     return [Window.from_wmctrl(window_string) for window_string in child_process.stdout.decode().strip().split('\n')]
