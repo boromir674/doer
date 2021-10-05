@@ -128,7 +128,7 @@ jobs:
       PYDOER_DEPS_GRAPHS: dependencies-graphs
     steps:
       - checkout
-      - run: sudo apt-get --allow-releaseinfo-change update
+      - run: sudo apt-get update
       - run: python -m pip install -U pip
       - run:
           name: Install the dot binary included in the graphviz package/distribution
