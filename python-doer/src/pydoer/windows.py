@@ -23,6 +23,17 @@ class Window:
 
     @classmethod
     def from_wmctrl(cls, window: str):
+        """Create a new Window from a string resulting from the wmctrl program.
+
+        Factory method for new Window instances.
+        The input string should be a line of the output of a 'wmctrl -lx' command.
+
+        Args:
+            window (str): a window represented as one line in the output of running 'wmctrl -lx'
+
+        Returns:
+            Window: the newly created instance
+        """
         matched_id, matched_window_title = re.match(r'^(.+?)[\ \t]+.+?[\ \t]+.+?[\ \t]+.+?[\ \t]+(.+)$', window).groups()
         # return list(re.match(r'^(0x[\d\w]+)[\t\ ]+[\ .:\-\w\d,]+[\t\ ]+([\w\-]+)$', window).groups())
         return Window(matched_id, matched_window_title)
@@ -62,12 +73,3 @@ def find_open_windows() -> List[Window]:
     if child_process.returncode != 0:
         raise RuntimeError(f"Invokation of command '{' '.join(command_args)}' exited with non-zero status.")
     return [Window.from_wmctrl(window_string) for window_string in child_process.stdout.decode().strip().split('\n')]
-
-
-if __name__ == '__main__':
-    print(find_open_windows())
-
-    w1 = Window('123', 'Title_A')
-    w2 = Window('123', 'Title_B')
-
-    print(w1 == w2)
