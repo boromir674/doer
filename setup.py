@@ -12,13 +12,7 @@ src = 'src'
 name = 'pydoer'
 source_code_repo = 'https://github.com/boromir674/doer'
 changelog = '{}/blob/master/CHANGELOG.rst'.format(source_code_repo)
-# description = 'A CLI application automating spawning of terminals and executing commands in them.'
 
-
-def readme():
-    with open(os.path.join(my_dir, 'README.rst')) as f:
-        return f.read()
-    # return str(resource_string(__name__, 'README.rst'))
 
 with open(os.path.join(my_dir, src, name, '__init__.py')) as f:
     _version = re.search(r'^__version__\s*=\s*[\'"]([^\'"]*)[\'"]', f.read(), re.MULTILINE).group(1)
@@ -36,11 +30,13 @@ setup(
     author_email='boromir674@hotmail.com',
     license='GNU GPLv3',
 
+    install_requires=requirements,
+
     project_urls=OrderedDict([
         ("Issue Tracker", f'{source_code_repo}/issues'),
         ("Changelog", changelog),
         ("Source", source_code_repo),
-        # ("4-Documentation", "https://blahblah.readthedocs.io/en/v{}/".format(_version)),
+        # ("Documentation", "https://pydoer.readthedocs.io/en/v{}/".format(_version)),
     ]),
 
     entry_points={

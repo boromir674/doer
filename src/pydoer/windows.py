@@ -35,7 +35,6 @@ class Window:
             Window: the newly created instance
         """
         matched_id, matched_window_title = re.match(r'^(.+?)[\ \t]+.+?[\ \t]+.+?[\ \t]+.+?[\ \t]+(.+)$', window).groups()
-        # return list(re.match(r'^(0x[\d\w]+)[\t\ ]+[\ .:\-\w\d,]+[\t\ ]+([\w\-]+)$', window).groups())
         return Window(matched_id, matched_window_title)
 
     ## Encode/Decode functionality

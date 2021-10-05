@@ -128,7 +128,7 @@ jobs:
       PYDOER_DEPS_GRAPHS: dependencies-graphs
     steps:
       - checkout
-      - run: sudo apt-get update -y
+      - run: sudo apt-get --allow-releaseinfo-change update
       - run: python -m pip install -U pip
       - run:
           name: Install the dot binary included in the graphviz package/distribution
@@ -153,22 +153,22 @@ workflows:
   version: 2
   build_accept:
     jobs:
-      - build_n_test:
-          filters:
-            tags:
-              only: /.*/  # runs for all branches and all tags
-      - send-coverage-to-codacy:
-          requires:
-            - build_n_test
-          filters:
-            tags:
-              only: /.*/
-      - send-coverage-to-codecov:
-          requires:
-            - build_n_test
-          filters:
-            tags:
-              only: /.*/
+      # - build_n_test:
+      #     filters:
+      #       tags:
+      #         only: /.*/  # runs for all branches and all tags
+      # - send-coverage-to-codacy:
+      #     requires:
+      #       - build_n_test
+      #     filters:
+      #       tags:
+      #         only: /.*/
+      # - send-coverage-to-codecov:
+      #     requires:
+      #       - build_n_test
+      #     filters:
+      #       tags:
+      #         only: /.*/
       - visualize_dependency_graphs:
           filters:
             branches:
@@ -176,6 +176,7 @@ workflows:
                 - master
                 - dev
                 - release-staging
+                - ci
       # - build-documentation:
       #     filters:
       #       branches:
@@ -183,12 +184,12 @@ workflows:
       #           - master
       #           - dev
       #           - release-staging
-      - deploy-to-staging:
-          requires:
-            - build_n_test
-          filters:
-            branches:
-              only: release-staging
+      # - deploy-to-staging:
+      #     requires:
+      #       - build_n_test
+      #     filters:
+      #       branches:
+      #         only: release-staging
       # - integration-test:
       #     requires:
       #       - deploy-to-staging
