@@ -4,6 +4,44 @@ PYDOER - CLI Application
 PyDoer is a CLI application aiming to automate executing multiple commands in different
 terminal applications.
 
+.. start-badges
+
+| |circleci| |codecov|
+| |better_code_hub| |codacy| |maintainability| |codeclimate_tech_debt| |sc1|
+
+|
+| **Source Code:** https://github.com/boromir674/doer
+|
+
+.. |circleci| image:: https://circleci.com/gh/boromir674/doer/tree/dev.svg?style=shield
+    :alt: CircleCI
+    :target: https://circleci.com/gh/boromir674/doer/tree/dev
+
+.. |codecov| image:: https://img.shields.io/codecov/c/github/boromir674/doer/dev?logo=codecov
+    :alt: Codecov
+    :target: https://codecov.io/gh/boromir674/doer
+
+
+.. |better_code_hub| image:: https://bettercodehub.com/edge/badge/boromir674/doer?branch=dev
+    :alt: Better Code Hub
+    :target: https://bettercodehub.com/
+
+.. |codacy| image:: https://app.codacy.com/project/badge/Grade/95d0b7816b9d4f17a986a877cc16c64a
+    :alt: Codacy
+    :target: https://www.codacy.com/gh/boromir674/doer/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=boromir674/doer&amp;utm_campaign=Badge_Grade
+
+.. |maintainability| image:: https://api.codeclimate.com/v1/badges/b5bdd6ec9c1dad2fe2d0/maintainability
+    :alt: Maintainability
+    :target: https://codeclimate.com/github/boromir674/doer/maintainability
+
+.. |codeclimate_tech_debt| image:: https://img.shields.io/codeclimate/tech-debt/boromir674/doer?logo=code%20climate
+    :alt: Code Climate technical debt
+    :target: https://codeclimate.com/github/boromir674/doer/trends/technical_debt
+
+.. |sc1| image:: https://img.shields.io/scrutinizer/quality/g/boromir674/doer/dev?logo=scrutinizer&style=flat
+    :alt: Scrutinizer code quality
+    :target: https://scrutinizer-ci.com/g/boromir674/doer/?branch=dev
+
 
 
 Featuring
