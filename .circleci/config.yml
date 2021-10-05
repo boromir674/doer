@@ -23,7 +23,7 @@ jobs:
       - run: python --version
       - run:
           name: Equip machine with wmctrl, a vital dependency of pydoer
-          command: apt-get install -y wmctrl
+          command: sudo apt-get install -y wmctrl
       - run:
           name: Equip machine with latest pip & wheel
           command: python -m pip install -U pip wheel
