@@ -16,7 +16,9 @@ commands:
   install_tox:
     description: "Install tox python automation tool"
     steps:
-      - run: python -m pip install --user tox
+      - run:
+          name: Install tox python automation tool
+          command: python -m pip install --user tox
 
 
 jobs:
