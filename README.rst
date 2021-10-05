@@ -27,9 +27,9 @@ terminal applications.
     :alt: Supported Python versions
     :target: https://pypi.org/project/pydoer
 
-.. |commits_since| image:: https://img.shields.io/github/commits-since/boromir674/pydoer/v1.0.0/master?logo=github
+.. |commits_since| image:: https://img.shields.io/github/commits-since/boromir674/doer/v1.0.2/master?logo=github
     :alt: GitHub commits on branch, since tagged version
-    :target: https://github.com/boromir674/pydoer/compare/v1.0.0..master
+    :target: https://github.com/boromir674/doer/compare/v1.0.2..master
 
 
 
