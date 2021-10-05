@@ -169,6 +169,16 @@ class MenuRenderer:
                 sys.exit(1)
 
     def _create_bash_script(self, entry_data):
+        """Create a 'do' shell script.
+
+        A 'do' script, when executed, spawns one or more terminal applications.
+
+        Args:
+            entry_data ([type]): [description]
+
+        Returns:
+            str: path of the shell script stored in the disk
+        """
         script_path = self._path(entry_data['_id'])
         # create script that spawns a new terminal, upon execution
         self._spawner.create_script_file(script_path,
