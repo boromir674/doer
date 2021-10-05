@@ -7,11 +7,33 @@ terminal applications.
 .. start-badges
 
 | |circleci| |codecov|
+| |release_version| |wheel| |supported_versions| |commits_since|
 | |better_code_hub| |codacy| |maintainability| |codeclimate_tech_debt| |sc1|
 
 |
 | **Source Code:** https://github.com/boromir674/doer
 |
+
+
+.. |release_version| image:: https://img.shields.io/pypi/v/pydoer
+    :alt: Production Version
+    :target: https://pypi.org/project/pydoer/
+
+.. |wheel| image:: https://img.shields.io/pypi/wheel/pydoer.svg
+    :alt: Python Wheel
+    :target: https://pypi.org/project/pydoer
+
+.. |supported_versions| image:: https://img.shields.io/pypi/pyversions/pydoer.svg
+    :alt: Supported Python versions
+    :target: https://pypi.org/project/pydoer
+
+.. |commits_since| image:: https://img.shields.io/github/commits-since/boromir674/pydoer/v1.0.0/master?logo=github
+    :alt: GitHub commits on branch, since tagged version
+    :target: https://github.com/boromir674/pydoer/compare/v1.0.0..master
+
+
+
+
 
 .. |circleci| image:: https://circleci.com/gh/boromir674/doer/tree/dev.svg?style=shield
     :alt: CircleCI
