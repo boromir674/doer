@@ -1,0 +1,263 @@
+{
+  "title": "DOER",
+  "subtitle": "Do it, do it now!",
+  "menu_entries": [
+
+    {
+      "_id": "douleia",
+      "label": "Douleia",
+      "terminals": [
+        {
+          "type": "texmaker-app",
+          "root": "/data/repos/cv",
+            "commands": [
+              "xdg-open /data/repos/cv/tex/resume/main.pdf",
+              "code .",
+              "xhost +",
+              "docker start -ai texmaker-app"
+          ]
+        },
+        {
+          "type": "douleia",
+          "root": "/data/repos/cv",
+          "commands": [
+            "brave-browser --new-window cord.co",
+            "brave-browser https://www.linkedin.com/",
+            "brave-browser https://docs.google.com/spreadsheets/d/14t0S5dP3oKuZijPk11oTUIEoIAFPVzBtCCV8SKl9Ypk/edit#gid=0"
+          ]
+        }
+      ]
+    },
+
+    {
+      "_id": "python-doer",
+      "label": "PyDoer",
+      "terminals": [
+        {
+          "type": "git",
+          "root": "/data/repos/doer"
+        },
+
+        {
+          "type": "mpeta",
+          "root": "/data/repos/doer",
+          "commands": [
+            "code .",
+            "emacs python-doer/menu_entries.json &"
+          ]
+        }
+      ]
+    },
+
+    {
+      "_id": "thesis",
+      "label": "Thesis",
+      "terminals": [
+        {
+          "type": "git",
+          "root": "/data/thesis/code"
+        },
+        {
+          "type": "ipython",
+          "root": "/data/thesis/code",
+          "interpreter_version": 2
+        },
+        {
+          "type": "mpeta",
+          "root": "/data/thesis",
+          "commands": [
+            "texmaker /data/thesis/report/tex/main.tex >/dev/null 2>&1 &",
+            "emacs /data/thesis/code/patmtk/regularizers.cfg --geometry 50x50+0+0 &",
+            "emacs /data/thesis/code/patmtk/train.cfg --geometry 60x45-0+75 &",
+            "emacs /data/thesis/code/patmtk/pipeline.cfg --geometry 25x25-0+0 &",
+            "source /data/thesis/scripts/add-aliases.sh",
+            "~/launchers/pycharm.py /data/thesis/code/patmtk >/dev/null 2>&1 &"
+          ]
+        }
+      ]
+    },
+
+    {
+      "_id": "so_magic",
+      "label": "So Magic",
+      "terminals": [
+        {
+          "type": "git",
+          "root": "/data/repos/so-magic"
+        },
+        {
+          "type": "mpeta",
+          "root": "/data/repos/so-magic",
+          "commands": [
+              "code ."
+          ]
+        },
+        {
+          "type": "deploy",
+          "root": "/data/repos/so-magic",
+          "commands": [
+              "printenv | grep SO_MAGIC"
+          ]
+        }
+      ]
+    },
+
+    {
+      "_id": "so_magic_api",
+      "label": "So Magic API",
+      "terminals": [
+        {
+          "type": "git",
+          "root": "/data/repos/so-magic-api"
+        },
+        {
+          "type": "mpeta",
+          "root": "/data/repos/so-magic-api",
+          "commands": [
+            "code ."
+          ]
+        },
+        {
+          "type": "server",
+          "root": "/data/repos/so-magic-api",
+          "commands": [
+            "source env/bin/activate",
+            "python run-server.py"
+          ]
+        }
+      ]
+    },
+
+    {
+      "_id": "so_magic_frontend",
+      "label": "So Magic Frontend",
+      "terminals": [
+        {
+          "type": "git",
+          "root": "/data/repos/so-magic-frontend"
+        },
+        {
+          "type": "mpeta",
+          "root": "/data/repos/so-magic-frontend",
+          "commands": [
+            "code ."
+          ]
+        },
+        {
+          "type": "sm-frontend-server",
+          "root": "/data/repos/so-magic-frontend",
+          "commands": [
+            "npm start"
+          ]
+        },
+        {
+          "type": "sm-frontend-test",
+          "root": "/data/repos/so-magic-frontend",
+          "commands": [
+            "npm test -- --watchAll=false",
+            "echo You can invoke the test runner to watch for file changes, with interactive mode",
+            "echo run: npm test"
+          ]
+        }
+      ]
+    },
+
+    {
+      "_id": "cinema",
+      "label": "Cinema",
+      "terminals": [
+        {
+          "type": "cinema",
+          "commands": [
+            "python3 /data/tools/doer/python-doer/launch-movies.py"
+          ]
+        }
+      ]
+    },
+
+    {
+      "_id": "album-creator",
+      "label": "Music Album creator",
+      "terminals": [
+        {
+          "type": "git",
+          "root": "/data/repos/music-album-creator"
+        },
+        {
+          "type": "ipython",
+          "root": "/data/repos/music-album-creator",
+          "interpreter_version": 3
+        },
+        {
+          "type": "mpeta",
+          "root": "/data/repos/music-album-creator",
+          "commands": [
+            "code ."
+          ]
+        }
+      ]
+    },
+
+    {
+      "_id": "oikonomika",
+      "label": "Oikonomika",
+      "terminals": [
+
+        {
+          "type": "mpeta",
+          "root": "/data/bureaucracy/ing",
+          "commands": [
+              "code .",
+              "brave-browser https://docs.google.com/spreadsheets/u/0/ >/dev/null 2>&1 &"
+          ]
+        }
+      ]
+    },
+
+   {
+    "_id": "cv",
+    "label": "Curriculum Vitae",
+    "terminals": [
+      {
+        "type": "cv-maker",
+        "root": "/data/repos/cv",
+          "commands": [
+            "xdg-open /data/repos/cv/tex/resume/main.pdf",
+            "code .",
+            "xhost +",
+            "docker start -ai texmaker-app"
+        ]
+      },
+      {
+        "type": "cv-git",
+        "root": "/data/repos/cv",
+          "commands": [
+          "git status",
+          "git log --graph --all --oneline --decorate | head",
+          "git tag"
+        ]
+      }
+    ]
+   },
+
+  {
+    "_id": "psr",
+    "label": "Python Semantic Release",
+    "terminals": [
+      {
+        "type": "psr-git",
+        "root": "/data/repos/python-semantic-release/"
+      },
+        {
+            "type": "psr-mpeta",
+            "root": "/data/repos/python-semantic-release/",
+            "commands": [
+                "code ."
+            ]
+
+      }
+    ]
+  }
+
+  ]
+}

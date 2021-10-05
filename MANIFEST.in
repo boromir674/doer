@@ -1,0 +1,22 @@
+include README.rst
+include CHANGELOG.rst
+include LICENSE
+
+global-exclude *.py[cod] __pycache__ *.so *.dylib
+
+# Python modules/files
+
+recursive-include src *.py
+recursive-include tests *.py
+include tests/invalid-menu-entries-1.json
+
+# app data
+include menu_entries.json
+include src/pydoer/doerrc
+
+include requirements.txt
+
+# CI / Test Automation
+include .circleci/config.yml
+include tox.ini
+include .coveragerc

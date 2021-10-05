@@ -1,5 +1,15 @@
 *.bak
 *\.pyc
 *__pycache__*
-generated_bash_scripts*
+*generated_bash_scripts*
 \.idea
+*\.egg-info
+\.tox
+dist
+py*-env
+*windows_opened_by_doer.txt
+\.vscode
+*/build/*
+*\.coverage
+*test-results
+*pydoer-dependency-graphs/
