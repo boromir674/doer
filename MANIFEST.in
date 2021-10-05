@@ -6,13 +6,13 @@ global-exclude *.py[cod] __pycache__ *.so *.dylib
 
 # Python modules/files
 
-graft src
-
+recursive-include src *.py
 recursive-include tests *.py
 include tests/invalid-menu-entries-1.json
-
+include menu_entries.json
 
 include src/pydoer/doerrc
 include requirements.txt
 include .coveragerc
 include tox.ini
+inlude .circleci/config.yml
