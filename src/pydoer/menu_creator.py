@@ -102,7 +102,7 @@ class SpawnListener(Observer):
     
     def update(self, *args, **kwargs) -> None:
         windows = args[0].state
-        # self.windows_manager.windows.update({window.id: window for window in windows})
+        # replace all stored windows with the newly "observed" ones
         self.windows_manager.windows = {window.id: window for window in windows}
         self.windows_manager.remember()
 
@@ -238,7 +238,6 @@ class RoundTripDecoder(json.JSONDecoder):
         return obj
 
 
-# @click.option('--debug/--no-debug', default=False)
 @click.group()
 def cli():
     pass
