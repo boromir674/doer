@@ -6,7 +6,7 @@ executors:
       - image: circleci/python:3.7.9
   py38-docker-image:
     docker:
-      - image: circleci/python:3.8.9
+      - image: cimg/python:3.8.12
   java15-docker-image:
     docker:
       - image: cimg/openjdk:15.0.1
