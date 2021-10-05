@@ -9,10 +9,14 @@ global-exclude *.py[cod] __pycache__ *.so *.dylib
 recursive-include src *.py
 recursive-include tests *.py
 include tests/invalid-menu-entries-1.json
-include menu_entries.json
 
+# app data
+include menu_entries.json
 include src/pydoer/doerrc
+
 include requirements.txt
-include .coveragerc
+
+# CI / Test Automation
+include .circleci/config.yml
 include tox.ini
-inlude .circleci/config.yml
+include .coveragerc
