@@ -20,10 +20,8 @@ commands:
           name: Install tox python automation tool
           command: python -m pip install --user tox
 
-
-jobs:
-  build_n_test:
-    executor: py38-docker-image
+  run_test_suite_with_coverage:
+    description: "Run the Test Suite (unit-tests) against an installation of the python package and a specific python interpreter version."
     steps:
       - run: pwd
       - checkout
@@ -68,6 +66,13 @@ jobs:
             - .coverage
             - tox.ini
             - .git
+
+
+jobs:
+  build_n_test:
+    executor: py38-docker-image
+    steps:
+      - run_test_suite_with_coverage
 
   send-coverage-to-codacy:
     executor: java15-docker-image
@@ -149,6 +154,7 @@ jobs:
       # - store_artifacts:
       #     path: uml-diagrams
       #     destination: uml-diagrams
+
 
 workflows:
   version: 2
