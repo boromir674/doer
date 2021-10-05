@@ -35,16 +35,16 @@ terminal applications.
 
 
 
-.. |circleci| image:: https://circleci.com/gh/boromir674/doer/tree/dev.svg?style=shield
+.. |circleci| image:: https://circleci.com/gh/boromir674/doer/tree/master.svg?style=shield
     :alt: CircleCI
-    :target: https://circleci.com/gh/boromir674/doer/tree/dev
+    :target: https://circleci.com/gh/boromir674/doer/tree/master
 
-.. |codecov| image:: https://img.shields.io/codecov/c/github/boromir674/doer/dev?logo=codecov
+.. |codecov| image:: https://img.shields.io/codecov/c/github/boromir674/doer/master?logo=codecov
     :alt: Codecov
     :target: https://codecov.io/gh/boromir674/doer
 
 
-.. |better_code_hub| image:: https://bettercodehub.com/edge/badge/boromir674/doer?branch=dev
+.. |better_code_hub| image:: https://bettercodehub.com/edge/badge/boromir674/doer?branch=master
     :alt: Better Code Hub
     :target: https://bettercodehub.com/
 
@@ -60,9 +60,9 @@ terminal applications.
     :alt: Code Climate technical debt
     :target: https://codeclimate.com/github/boromir674/doer/trends/technical_debt
 
-.. |sc1| image:: https://img.shields.io/scrutinizer/quality/g/boromir674/doer/dev?logo=scrutinizer&style=flat
+.. |sc1| image:: https://img.shields.io/scrutinizer/quality/g/boromir674/doer/master?logo=scrutinizer&style=flat
     :alt: Scrutinizer code quality
-    :target: https://scrutinizer-ci.com/g/boromir674/doer/?branch=dev
+    :target: https://scrutinizer-ci.com/g/boromir674/doer/?branch=master
 
 
 
