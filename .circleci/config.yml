@@ -10,6 +10,9 @@ executors:
   java15-docker-image:
     docker:
       - image: cimg/openjdk:15.0.1
+  base-linux-2021_07:
+    docker:
+    - image: cimg/base:2021.07
   ubuntu-1604-vm:
     machine:
       image: ubuntu-1604:201903-01
@@ -79,7 +82,7 @@ jobs:
             java -jar codacy-coverage-reporter-assembly.jar report -l Python -r coverage.xml
 
   send-coverage-to-codecov:
-    executor: ubuntu-1604-vm
+    executor: base-linux-2021_07
     steps:
       - attach_workspace:
           at: .
@@ -176,6 +179,12 @@ workflows:
                 - master
                 - dev
                 - release-staging
+      - deploy-to-staging:
+          requires:
+            - build_n_test
+          filters:
+            branches:
+              only: release-staging
       # - build-documentation:
       #     filters:
       #       branches:
@@ -183,15 +192,3 @@ workflows:
       #           - master
       #           - dev
       #           - release-staging
-      - deploy-to-staging:
-          requires:
-            - build_n_test
-          filters:
-            branches:
-              only: release-staging
-      # - integration-test:
-      #     requires:
-      #       - deploy-to-staging
-      #     filters:
-      #       branches:
-      #         only: release-staging
