@@ -35,7 +35,6 @@ class Window:
             Window: the newly created instance
         """
         matched_id, matched_window_title = re.match(r'^(.+?)[\ \t]+.+?[\ \t]+.+?[\ \t]+.+?[\ \t]+(.+)$', window).groups()
-        # return list(re.match(r'^(0x[\d\w]+)[\t\ ]+[\ .:\-\w\d,]+[\t\ ]+([\w\-]+)$', window).groups())
         return Window(matched_id, matched_window_title)
 
     ## Encode/Decode functionality
@@ -71,5 +70,5 @@ def find_open_windows() -> List[Window]:
     command_args = ['wmctrl',  '-lx']
     child_process = subprocess.run(command_args, capture_output=True)
     if child_process.returncode != 0:
-        raise RuntimeError(f"Invokation of command '{' '.join(command_args)}' exited with non-zero status.")
+        raise RuntimeError(f"Command '{' '.join(command_args)}' exited with non-zero status. Stderr: {child_process.stderr.decode().strip()}")
     return [Window.from_wmctrl(window_string) for window_string in child_process.stdout.decode().strip().split('\n')]

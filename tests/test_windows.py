@@ -30,11 +30,27 @@ def test_window_comparison(window):
     w2 = window._class('123', 'Epilogue')
     assert w1 == w2
 
+    w3 = window._class('0x123', 'Epilogue')
+    assert w2 != w3
 
-def test_find_windows(window):
+
+def test_find_windows(monkeypatch, window):
+    # TODO build a mock of the output of a sucessful wmctrl -lx command
+    import subprocess
+    mocked_suceeded_wmctrl_child_process = type('MockedSuceededWmctrlChildProcess', (), {
+        'returncode': 0,
+        'stdout': b'0x12345 0 wm_class_name_1 host window_title_A\n0x05c000a6  0 brave-browser.Brave-browser  dibou-laptop-Slim-9-Pro-11BYU9-O wmctrl(1) - Linux man page - Brave\n',
+        'stderr': b'',
+    })
+    def get_emulated_child_process(*args, **kwargs):
+        return mocked_suceeded_wmctrl_child_process
+
+    monkeypatch.setattr(subprocess, 'run', get_emulated_child_process)
     open_windows = window.find_open_windows()
     assert type(open_windows) == list
     print(open_windows)
+
+
 # def test_encode
 
 
