@@ -1,9 +1,15 @@
 version: 2.1
 
 executors:
+  py37-docker-image:
+    docker:
+      - image: cimg/python:3.7.12
   py38-docker-image:
     docker:
       - image: cimg/python:3.8.12
+  py39-docker-image:
+    docker:
+      - image: cimg/python:3.9.7
   java15-docker-image:
     docker:
       - image: cimg/openjdk:15.0.1
@@ -39,6 +45,18 @@ commands:
 
 
 jobs:
+  test_python37:
+    executor: py37-docker-image
+    environment:
+      TOXENV=py37
+    steps:
+      - run_tox
+  test_python39:
+    executor: py39-docker-image
+    environment:
+      TOXENV=py39
+    steps:
+      - run_tox
   build_n_test:
     executor: py38-docker-image
     environment:
@@ -161,6 +179,14 @@ workflows:
   version: 2
   build_accept:
     jobs:
+      - test_python37:
+          filters:
+            tags:
+              only: /.*/  # runs for all branches and all tags
+      - test_python39:
+          filters:
+            tags:
+              only: /.*/  # runs for all branches and all tags
       - build_n_test:
           filters:
             tags:
@@ -188,6 +214,8 @@ workflows:
           context:
             - TEST_PYPI_CREDENTIALS
           requires:
+            - test_python37
+            - test_python39
             - build_n_test
           filters:
             branches:
