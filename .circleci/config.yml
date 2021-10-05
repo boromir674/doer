@@ -175,6 +175,8 @@ workflows:
                 - dev
                 - release-staging
       - deploy-to-staging:
+          context:
+            - TEST_PYPI_CREDENTIALS
           requires:
             - build_n_test
           filters:
