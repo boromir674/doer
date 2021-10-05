@@ -35,7 +35,7 @@ class PersistanceManager:
     def save(self, string):
         with open(self.cache_file, 'a') as f:
             f.write(string + '\n')
-    
+
     def read(self):
         if os.path.exists(self.cache_file):
             with open(self.cache_file, 'r') as f:
