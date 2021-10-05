@@ -1,9 +1,6 @@
 version: 2.1
 
 executors:
-  py37-docker-image:
-    docker:
-      - image: circleci/python:3.7.9
   py38-docker-image:
     docker:
       - image: cimg/python:3.8.12
@@ -13,9 +10,7 @@ executors:
   base-linux-2021_07:
     docker:
     - image: cimg/base:2021.07
-  ubuntu-1604-vm:
-    machine:
-      image: ubuntu-1604:201903-01
+
 
 jobs:
   build_n_test:
