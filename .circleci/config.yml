@@ -59,9 +59,9 @@ jobs:
           root: .
           # Must be relative path from root
           paths:
-            - python-doer/coverage.xml
-            - python-doer/.coverage
-            - python-doer/tox.ini
+            - coverage.xml
+            - .coverage
+            - tox.ini
             - .git
 
   send-coverage-to-codacy:
