@@ -20,8 +20,8 @@ commands:
           name: Install tox python automation tool
           command: python -m pip install --user tox
 
-  run_test_suite_with_coverage:
-    description: "Run the Test Suite (unit-tests) against an installation of the python package and a specific python interpreter version."
+  run_tox:
+    description: "Run tox."
     steps:
       - run: pwd
       - checkout
@@ -34,9 +34,17 @@ commands:
           command: python -m pip install -U pip wheel
       - install_tox
       - run:
-          name: Run unittests & measure code coverage
-          command: |
-            python -m tox -e py38-cov
+          name: Run tox
+          command: python -m tox
+
+
+jobs:
+  build_n_test:
+    executor: py38-docker-image
+    environment:
+      TOXENV=py38-cov
+    steps:
+      - run_tox
       - store_test_results:  # Upload test results for display in Test Summary: https://circleci.com/docs/2.0/collect-test-data/
           path: test-results
       - store_artifacts:
@@ -66,13 +74,6 @@ commands:
             - .coverage
             - tox.ini
             - .git
-
-
-jobs:
-  build_n_test:
-    executor: py38-docker-image
-    steps:
-      - run_test_suite_with_coverage
 
   send-coverage-to-codacy:
     executor: java15-docker-image
