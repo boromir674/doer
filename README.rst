@@ -7,11 +7,31 @@ terminal applications.
 .. start-badges
 
 | |circleci| |codecov|
-| |better_code_hub| |codacy| |maintainability| |codeclimate_tech_debt| |sc1|
+| |release_version| |wheel| |supported_versions| |commits_since|
+| |better_code_hub| |sc1|
 
 |
 | **Source Code:** https://github.com/boromir674/doer
 |
+
+
+.. |release_version| image:: https://img.shields.io/pypi/v/pydoer
+    :alt: Production Version
+    :target: https://pypi.org/project/pydoer/
+
+.. |wheel| image:: https://img.shields.io/pypi/wheel/pydoer.svg
+    :alt: Python Wheel
+    :target: https://pypi.org/project/pydoer
+
+.. |supported_versions| image:: https://img.shields.io/pypi/pyversions/pydoer.svg
+    :alt: Supported Python versions
+    :target: https://pypi.org/project/pydoer
+
+.. |commits_since| image:: https://img.shields.io/github/commits-since/boromir674/doer/v1.0.2/dev?logo=github
+    :alt: GitHub commits on branch, since tagged version
+    :target: https://github.com/boromir674/doer/compare/v1.0.2..dev
+
+
 
 .. |circleci| image:: https://circleci.com/gh/boromir674/doer/tree/dev.svg?style=shield
     :alt: CircleCI
@@ -26,17 +46,6 @@ terminal applications.
     :alt: Better Code Hub
     :target: https://bettercodehub.com/
 
-.. |codacy| image:: https://app.codacy.com/project/badge/Grade/95d0b7816b9d4f17a986a877cc16c64a
-    :alt: Codacy
-    :target: https://www.codacy.com/gh/boromir674/doer/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=boromir674/doer&amp;utm_campaign=Badge_Grade
-
-.. |maintainability| image:: https://api.codeclimate.com/v1/badges/b5bdd6ec9c1dad2fe2d0/maintainability
-    :alt: Maintainability
-    :target: https://codeclimate.com/github/boromir674/doer/maintainability
-
-.. |codeclimate_tech_debt| image:: https://img.shields.io/codeclimate/tech-debt/boromir674/doer?logo=code%20climate
-    :alt: Code Climate technical debt
-    :target: https://codeclimate.com/github/boromir674/doer/trends/technical_debt
 
 .. |sc1| image:: https://img.shields.io/scrutinizer/quality/g/boromir674/doer/dev?logo=scrutinizer&style=flat
     :alt: Scrutinizer code quality
