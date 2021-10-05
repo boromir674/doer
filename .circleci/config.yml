@@ -28,6 +28,10 @@ commands:
 
   run_tox:
     description: "Run tox."
+    parameters:
+      toxenv:
+        default: "dev-test-cov"
+        type: string
     steps:
       - run: pwd
       - checkout
@@ -41,28 +45,25 @@ commands:
       - install_tox
       - run:
           name: Run tox
-          command: python -m tox
+          command: TOXENV=<<parameters.toxenv>> python -m tox -vv
 
 
 jobs:
   test_python37:
     executor: py37-docker-image
-    environment:
-      TOXENV=py37
     steps:
-      - run_tox
+      - run_tox:
+          toxenv: "py37"
   test_python39:
     executor: py39-docker-image
-    environment:
-      TOXENV=py39
     steps:
-      - run_tox
+      - run_tox:
+          toxenv: "py39"
   build_n_test:
     executor: py38-docker-image
-    environment:
-      TOXENV=py38-cov
     steps:
-      - run_tox
+      - run_tox:
+          toxenv: "py38-cov"
       - store_test_results:  # Upload test results for display in Test Summary: https://circleci.com/docs/2.0/collect-test-data/
           path: test-results
       - store_artifacts:
