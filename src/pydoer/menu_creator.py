@@ -169,7 +169,7 @@ class MenuRenderer:
 
     def construct_menu(self, json_file):
         with open(json_file, 'r') as file_:
-            res = json.load(file_, cls=RoundTripDecoder)
+            res = json.load(file_, cls=json.JSONDecoder)
             console_menu = ConsoleMenu(res['title'], res['subtitle'])
             for menu_dict in res['menu_entries']:
                 script_path = self._create_bash_script(menu_dict)
@@ -242,18 +242,6 @@ class MenuRenderer:
         return [cmd('spawn-terminal', self._path(doer, launcher=terminal_type))]
 
 
-class RoundTripEncoder(json.JSONEncoder): pass
-
-
-class RoundTripDecoder(json.JSONDecoder): pass
-# class RoundTripDecoder(json.JSONDecoder):
-#     def __init__(self, *args, **kwargs):
-#         json.JSONDecoder.__init__(self, object_hook=self.object_hook, *args, **kwargs)
-
-#     def object_hook(self, obj):
-#         return obj
-
-
 @click.group()
 def cli():
     pass
@@ -293,39 +281,3 @@ def menu(json_path, scripts_dir):
 
 if __name__ == '__main__':
     cli()
-
-
-
-
-
-# LEGACY CODE
-
-
-# # Create the menu
-# menu = ConsoleMenu("DOER", "Do it, do it now!")
-#
-# # Create some items
-#
-# # MenuItem is the base class for all items, it doesn't do anything when selected
-# menu_item = MenuItem("Menu Item")
-#
-# # A FunctionItem runs a Python function when selected
-# function_item = FunctionItem("Call a Python function", input, ["Enter an input "])
-#
-# # A CommandItem runs a console command
-# command_item = CommandItem("Run a console command",  "touch hello.txt")
-#
-# # A SelectionMenu constructs a menu from a list of strings
-# selection_menu = SelectionMenu(["item1", "item2", "item3"])
-#
-# # A SubmenuItem lets you add a menu (the selection_menu above, for example)
-# # as a submenu of another menu
-# submenu_item = SubmenuItem("Submenu item", selection_menu, menu)
-#
-# # Once we're done creating them, we just add the items to the menu
-# menu.append_item(menu_item)
-# menu.append_item(function_item)
-# menu.append_item(command_item)
-# menu.append_item(submenu_item)
-
-# Finally, we call show to show the menu and allow the user to interact
