@@ -3,43 +3,39 @@
 import os
 import sys
 import json
-from time import sleep
 import subprocess
-from typing import List
+from time import sleep
 from functools import reduce
 
 import attr
 import click
-from consolemenu import *
 from consolemenu import ConsoleMenu
 from consolemenu.items import CommandItem
 
 from .terminal_spawner import ScriptGenerator
 from .commands import cmd
-from .notification import *
-from .windows import find_open_windows,Window
-
-
+from .notification import Observer, Subject
+from .windows import find_open_windows, Window
 
 
 my_dir = os.path.dirname(os.path.realpath(__file__))
-persist_file_name = '.windows_opened_by_doer.txt'
+PERSIST_FILE_NAME = '.windows_opened_by_doer.txt'
 
 bash_scripts_dir_path = os.path.join(my_dir, 'generated_bash_scripts')
 
 
 @attr.s
 class PersistanceManager:
-    cache_file: str = attr.ib(default=os.path.join(my_dir, persist_file_name))
+    cache_file: str = attr.ib(default=os.path.join(my_dir, PERSIST_FILE_NAME))
 
     def save(self, string):
-        with open(self.cache_file, 'a') as f:
-            f.write(string + '\n')
+        with open(self.cache_file, 'a') as file_:
+            file_.write(string + '\n')
 
     def read(self):
         if os.path.exists(self.cache_file):
-            with open(self.cache_file, 'r') as f:
-                return f.read()
+            with open(self.cache_file, 'r') as file_:
+                return file_.read()
         else:
             return ''
 
@@ -55,7 +51,7 @@ class PersistanceManager:
 
     def flush(self):
         """Remove windows 'remembered' in the cache file."""
-        with open(self.cache_file, 'w') as f:
+        with open(self.cache_file, 'w') as _file:
             pass
 
 
@@ -68,8 +64,8 @@ class WindowsManager:
     @classmethod
     def from_persist_file(cls, file_path: str):
         """Create an instance of WindowsManager given a custom file path to use for persistance (save/load).
-        
-        Factory method 
+
+        Factory method
         Args:
             file_path (str): the file that shall store informatin about windows opened by pydoer
 
@@ -88,7 +84,7 @@ class WindowsManager:
         windows = [Window.decode(window_string) for window_string in self.persistance.iter_windows()]
         for window in windows:
             print(f"Closing '{window.id}' window: {window.title}")
-            _child_process = subprocess.run(['wmctrl',  '-ic', window.id], capture_output=True)
+            _child_process = subprocess.run(['wmctrl',  '-ic', window.id], capture_output=True, check=False)
         self.persistance.flush()
 
 
@@ -98,7 +94,7 @@ win_manager = WindowsManager()
 @attr.s
 class SpawnListener(Observer):
     windows_manager: WindowsManager = attr.ib(default=attr.Factory(WindowsManager))
-    
+
     def update(self, *args, **kwargs) -> None:
         windows = args[0].state
         # replace all stored windows with the newly "observed" ones
@@ -119,7 +115,7 @@ class MyCommandItem(CommandItem):
         super().action()
 
         # todo measure time here
-        # and noti'fy of newly spawned windows on another event to avoid sleeping immediately here
+        # and notify of newly spawned windows on another event to avoid sleeping immediately here
         # in other words do a lazy notification to avoid sleeping here
         sleep(2.0)
 
@@ -129,7 +125,7 @@ class MyCommandItem(CommandItem):
 
         nb_new_windows = len(windows_after) - len(windows)
         assert nb_new_windows > 0
-        assert all([x == windows_after[i] for i, x in enumerate(windows)])
+        assert all((x == windows_after[i] for i, x in enumerate(windows)))
         new_windows = windows_after[-nb_new_windows:]
         self.subject.state = new_windows
         self.subject.notify()
@@ -138,13 +134,23 @@ class MyCommandItem(CommandItem):
 class MenuRenderer:
     __my_dir = os.path.dirname(os.path.realpath(__file__))
 
-    def __init__(self, terminal_spawn_listener: Observer, doer_rc_file='', generated_scripts_directory=''):
-        """[summary]
+    def __init__(self, terminal_spawn_listener: Observer, doer_rc_file='', scripts_directory=''):
+        """A parser or terminal application(s) configuration (json) file and renderer of an interactive cli menu.
+
+        Creates an instance of MenuRenderer given a "listener" that should know how to handle notification events, when
+        a menu option is "selected".
+
+        For each menu option, it generates a "do" script which is responsible then to spawn one or more terminal
+        applications. Each terminal application will execute a common "doerrc" bash script that serves the same purpose
+        of a ~/.bashrc file (ie login script). Then it runs the custom commands tailored to that terminal.
+
+        Optionally, you can provide a "doerrc" script at runtime with the `doer_rc_file` kwarg or let the default run.
+        Optionally, you can provide the location to store every automatically generated shell script (ie for debug).
 
         Args:
             terminal_spawn_listener (Observer): an object with an 'update' method that can handle newly observed windows
-            doer_rc_file (str, optional): file that act similarly to a ~/.bashrc file. Defaults to ''.
-            generated_scripts_directory (str, optional): the location to store the dynamically generated scripts. Defaults to ''.
+            doer_rc_file (str, optional): file that acts similarly to a ~/.bashrc file. Defaults to ''.
+            scripts_directory (str, optional): the location to store the dynamically generated scripts. Defaults to ''.
 
         Raises:
             ValueError: [description]
@@ -155,23 +161,23 @@ class MenuRenderer:
         if not os.path.isfile(doer_rc_file):
             raise ValueError("Doer rc file '{}' is not a file".format(doer_rc_file))
         self._doer_rc_file  = doer_rc_file
-        if generated_scripts_directory:
-            self._my_dir = generated_scripts_directory
+        if scripts_directory:
+            self._my_dir = scripts_directory
         else:
             self._my_dir = self.__my_dir
         self._spawner = ScriptGenerator()
 
     def construct_menu(self, json_file):
-        with open(json_file, 'r') as fp:
-            res = json.load(fp, cls=RoundTripDecoder)
-            menu = ConsoleMenu(res['title'], res['subtitle'])
+        with open(json_file, 'r') as file_:
+            res = json.load(file_, cls=RoundTripDecoder)
+            console_menu = ConsoleMenu(res['title'], res['subtitle'])
             for menu_dict in res['menu_entries']:
                 script_path = self._create_bash_script(menu_dict)
-                menu.append_item(MyCommandItem(menu_dict['label'], 'bash {}'.format(script_path)))
-                item = menu.items[-1]
+                console_menu.append_item(MyCommandItem(menu_dict['label'], 'bash {}'.format(script_path)))
+                item = console_menu.items[-1]
                 item.subject.attach(self.terminal_spawn_listener)
             try:
-                menu.show()
+                console_menu.show()
             except KeyboardInterrupt:
                 print('\nExiting..')
                 sys.exit(1)
@@ -201,11 +207,11 @@ class MenuRenderer:
                 if 'root' in terminal_data:
                     arguments[0] = [cmd('cd', terminal_data['root'])] + arguments[0]
             else:
-                if terminal_data['type'] not in ('git' 'ipython'):
+                if terminal_data['type'] not in ('git', 'ipython'):
                     arguments = [[cmd('cd', terminal_data['root'])]]
                 else:
-                    arguments = [_ for _ in [terminal_data.get('root', None), terminal_data.get('interpreter_version', None)] if _]
-            # Create a 'launch' script that should run on a newly spawned terminal. This script acts a step to setup the terminal
+                    arguments = [_ for _ in [terminal_data.get('root'), terminal_data.get('interpreter_version')] if _]
+            # Create a 'launch' script that should run on a newly spawned terminal.
             self._spawner.create_rc_file(terminal_data['type'], self._path(entry_data['_id'],
                 launcher=terminal_data['type']), *arguments, global_rc_file_path=self._doer_rc_file)
         return script_path
@@ -239,12 +245,13 @@ class MenuRenderer:
 class RoundTripEncoder(json.JSONEncoder): pass
 
 
-class RoundTripDecoder(json.JSONDecoder):
-    def __init__(self, *args, **kwargs):
-        json.JSONDecoder.__init__(self, object_hook=self.object_hook, *args, **kwargs)
+class RoundTripDecoder(json.JSONDecoder): pass
+# class RoundTripDecoder(json.JSONDecoder):
+#     def __init__(self, *args, **kwargs):
+#         json.JSONDecoder.__init__(self, object_hook=self.object_hook, *args, **kwargs)
 
-    def object_hook(self, obj):
-        return obj
+#     def object_hook(self, obj):
+#         return obj
 
 
 @click.group()
@@ -260,25 +267,28 @@ def close_doing():
 
 @cli.command()  # @cli, not @click!
 @click.argument('json_path')  # help='path to the json file from which to construct the menu')
-@click.option('-sd', '--scripts-dir', default=bash_scripts_dir_path, help='define your custom location to store the generated bash files')
+@click.option('-sd', '--scripts-dir', default=bash_scripts_dir_path,
+    help='define your custom location to store the generated bash files')
 def menu(json_path, scripts_dir):
     if not os.path.isdir(scripts_dir):
         try:
             os.makedirs(scripts_dir)
-        except Exception as e:
-            print(e)
+        except Exception as any_exception:
+            print(any_exception)
             print('You can try the following:\n'
-                  '* install pydoer in a location that the code will have permission to create a directory (eg using the --user flag with pip install\n'
-                  '* pass in a directory using parameter flag -sd or --scripts-dir, where the code will have the necessary permissions to read/write')
+                  '* install pydoer in a location that the code will have permission to create a directory '
+                  '(eg using the --user flag with pip install\n'
+                  '* pass in a directory using parameter flag -sd or --scripts-dir, where the code will have '
+                  'the necessary permissions to read/write')
             sys.exit(1)
 
     terminal_spawn_listener = SpawnListener(win_manager)
 
-    mr = MenuRenderer(
+    menu_renderer = MenuRenderer(
         terminal_spawn_listener=terminal_spawn_listener,
-        generated_scripts_directory=scripts_dir
+        scripts_directory=scripts_dir
     )
-    mr.construct_menu(json_path)
+    menu_renderer.construct_menu(json_path)
 
 
 if __name__ == '__main__':
