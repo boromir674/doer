@@ -51,7 +51,7 @@ class PersistanceManager:
 
     def flush(self):
         """Remove windows 'remembered' in the cache file."""
-        with open(self.cache_file, 'w') as _file:
+        with open(self.cache_file, 'w') as _:
             pass
 
 
@@ -84,7 +84,8 @@ class WindowsManager:
         windows = [Window.decode(window_string) for window_string in self.persistance.iter_windows()]
         for window in windows:
             print(f"Closing '{window.id}' window: {window.title}")
-            _child_process = subprocess.run(['wmctrl',  '-ic', window.id], capture_output=True, check=False)
+            # since check=False no exception is thrown if the wmctrl -ic command fails
+            subprocess.run(['wmctrl',  '-ic', window.id], capture_output=True, check=False)
         self.persistance.flush()
 
 
