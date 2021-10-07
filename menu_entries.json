@@ -43,7 +43,7 @@
           "root": "/data/repos/doer",
           "commands": [
             "code .",
-            "emacs python-doer/menu_entries.json &"
+            "emacs menu_entries.json &"
           ]
         }
       ]
