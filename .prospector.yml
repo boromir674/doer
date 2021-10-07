@@ -14,12 +14,13 @@ autodetect: false
 max-line-length: 120
 
 
+## Specific tools configuration
+
 pyflakes:
   run: true
   disable:
     - F403
     - F810
-    - F841
 
 pyroma:
   run: true
