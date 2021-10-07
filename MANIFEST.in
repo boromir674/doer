@@ -8,15 +8,20 @@ global-exclude *.py[cod] __pycache__ *.so *.dylib
 
 recursive-include src *.py
 recursive-include tests *.py
-include tests/invalid-menu-entries-1.json
+
+include requirements.txt
 
 # app data
 include menu_entries.json
 include src/pydoer/doerrc
 
-include requirements.txt
+# test data
+include tests/invalid-menu-entries-1.json
 
-# CI / Test Automation
+
+# CI / Test Automation / Lint / Static Analysis
 include .circleci/config.yml
 include tox.ini
 include .coveragerc
+include .prospector.yml
+include .pylintrc
