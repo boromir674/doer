@@ -1,4 +1,4 @@
-from .subclass_registry import SubclassRegistry
+from software_patterns import SubclassRegistry
 
 
 class BashCommand(str, metaclass=SubclassRegistry):
@@ -16,19 +16,6 @@ class BashCommand(str, metaclass=SubclassRegistry):
         if run_in_background:
             string_instance += ' &'
         return string_instance
-
-    # @classmethod
-    # def register_subclass(cls, command_type):
-    #     def decorator(subclass):
-    #       cls.subclasses[command_type] = subclass
-    #       return subclass
-    #     return decorator
-
-    # @classmethod
-    # def create(cls, command_type, *args, **kwargs):
-    #     if command_type not in cls.subclasses:
-    #         raise ValueError('Bad command type {}'.format(command_type))
-    #     return cls.subclasses[command_type](*args, **kwargs)
 
 
 @BashCommand.register_as_subclass('arbitrary-command')

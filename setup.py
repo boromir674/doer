@@ -41,7 +41,7 @@ setup(
 
     entry_points={
         'console_scripts': [
-            'pydoer = pydoer.menu_creator:cli',
+            'pydoer = pydoer.cli:cli',
         ]
     },
 

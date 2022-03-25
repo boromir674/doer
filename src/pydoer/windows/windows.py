@@ -1,5 +1,3 @@
-from typing import List
-import subprocess
 import re
 
 import attr
@@ -59,17 +57,3 @@ class Window:
 
     def __eq__(self, o: object) -> bool:
         return self.id == o.id
-
-
-def find_open_windows() -> List[Window]:
-    """Find out what windows are currently 'open' in the OS.
-
-    Returns:
-        List[Window]: [description]
-    """
-    command_args = ('wmctrl',  '-lx')
-    child_process = subprocess.run(list(command_args), capture_output=True, check=False)
-    if child_process.returncode != 0:
-        raise RuntimeError(f"Command '{' '.join(command_args)}' exited with non-zero status. "
-                           f"Stderr: {child_process.stderr.decode().strip()}")
-    return [Window.from_wmctrl(window_string) for window_string in child_process.stdout.decode().strip().split('\n')]

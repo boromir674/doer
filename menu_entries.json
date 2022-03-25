@@ -4,6 +4,56 @@
   "menu_entries": [
 
     {
+      "_id": "alvin",
+      "label": "Alvin",
+      "terminals": [
+        {
+          "type": "parser",
+          "root": "/data/repos/alvin/alvin/parser",
+            "commands": [
+              "./scripts/run-dev"
+          ]
+        },
+        {
+          "type": "celery",
+          "root": "/data/repos/alvin/alvin/backend",
+          "commands": [
+            "./scripts/run-celery"
+          ]
+        },
+        {
+          "type": "api",
+          "root": "/data/repos/alvin/alvin/backend",
+          "commands": [
+            "./scripts/run-api"
+          ]
+        },
+        {
+          "type": "ui",
+          "root": "/data/repos/alvin/alvin/ui",
+          "commands": [
+            "./scripts/run-dev"
+          ]
+        },
+        {
+          "type": "git",
+          "root": "/data/repos/alvin/alvin"
+        },
+        {
+          "type": "MPETA",
+          "root": "/data/repos/alvin/alvin",
+          "commands": [
+            "code .",
+            "brave-browser --new-window https://github.com/alvindotai/alvin &",
+            "brave-browser https://github.com/alvindotai/alvin/pulls &",
+            "brave-browser https://linear.app/alvin-ai/view/d6de0072-69b0-4fb0-a4b3-62a242843dcd &",
+            "brave-browser https://calendar.google.com/calendar/u/1/r &"
+          ]
+        }
+      ]
+    },
+
+    {
       "_id": "douleia",
       "label": "Douleia",
       "terminals": [
@@ -18,16 +68,42 @@
           ]
         },
         {
-          "type": "douleia",
+          "type": "mailspring",
           "root": "/data/repos/cv",
           "commands": [
-            "brave-browser --new-window cord.co",
-            "brave-browser https://www.linkedin.com/",
-            "brave-browser https://docs.google.com/spreadsheets/d/14t0S5dP3oKuZijPk11oTUIEoIAFPVzBtCCV8SKl9Ypk/edit#gid=0"
+            "mailspring"
+          ]
+        },
+        {
+          "type": "browser",
+          "root": "/data/repos/cv",
+          "commands": [
+            "brave-browser --new-window cord.co &",
+            "brave-browser https://www.linkedin.com/ &",
+              "brave-browser https://docs.google.com/spreadsheets/d/14t0S5dP3oKuZijPk11oTUIEoIAFPVzBtCCV8SKl9Ypk/edit#gid=0 &",
+	      "brave-browser https://www.hotmail.com &"
           ]
         }
       ]
     },
+
+      {
+	  "_id": "neural-style-transfer",
+	  "label": "Neural Style Transfer",
+	  "terminals": [
+	      {
+		  "type": "mpeta",
+		  "root": "/data/repos/neural-style-transfer",
+		  "commands": [
+		      "code ."
+		  ]
+	      },
+	      {
+		  "type": "git",
+		  "root": "/data/repos/neural-style-transfer"
+	      }
+	  ]
+      },
 
     {
       "_id": "python-doer",
@@ -121,8 +197,7 @@
           "type": "server",
           "root": "/data/repos/so-magic-api",
           "commands": [
-            "source env/bin/activate",
-            "python run-server.py"
+              "tox -e demo -- --reload"
           ]
         }
       ]
