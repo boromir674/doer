@@ -8,14 +8,14 @@ class BashCommand(str, metaclass=SubclassRegistry):
         silence_all = kwargs.get('silence_all', False)
         run_in_background = kwargs.get('run_in_background', False)
         if hasattr(cls, '_text'):
-            x = super().__new__(cls, cls._text.format(*args))
+            string_instance = super().__new__(cls, cls._text.format(*args))
         else:
-            x = super().__new__(cls, args[0])
+            string_instance = super().__new__(cls, args[0])
         if silence_all:
-            x += ' >/dev/null 2>&1'
+            string_instance += ' >/dev/null 2>&1'
         if run_in_background:
-            x += ' &'
-        return x
+            string_instance += ' &'
+        return string_instance
 
     # @classmethod
     # def register_subclass(cls, command_type):

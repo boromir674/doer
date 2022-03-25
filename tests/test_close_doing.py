@@ -1,6 +1,3 @@
-import os
-
-import pytest
 from click.testing import CliRunner
 
 from pydoer.menu_creator import close_doing

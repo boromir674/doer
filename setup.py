@@ -2,19 +2,19 @@ import os
 import re
 from collections import OrderedDict
 
-from setuptools import find_packages, setup
+from setuptools import setup
 
 my_dir = os.path.dirname(os.path.realpath(__file__))
 
 
 # CONSTANTS
-src = 'src'
-name = 'pydoer'
-source_code_repo = 'https://github.com/boromir674/doer'
-changelog = '{}/blob/master/CHANGELOG.rst'.format(source_code_repo)
+PRODUCTION_CODE_SOURCE = 'src'
+PYPI_PACKAGE_NAME = 'pydoer'
+SOURCE_CODE_REPO_SITE = 'https://github.com/boromir674/doer'
+CHANGELOG = '{}/blob/master/CHANGELOG.rst'.format(SOURCE_CODE_REPO_SITE)
 
 
-with open(os.path.join(my_dir, src, name, '__init__.py')) as f:
+with open(os.path.join(my_dir, PRODUCTION_CODE_SOURCE, PYPI_PACKAGE_NAME, '__init__.py')) as f:
     _version = re.search(r'^__version__\s*=\s*[\'"]([^\'"]*)[\'"]', f.read(), re.MULTILINE).group(1)
 
 with open(os.path.join(my_dir, 'requirements.txt'), 'r') as f:
@@ -22,7 +22,7 @@ with open(os.path.join(my_dir, 'requirements.txt'), 'r') as f:
 
 
 setup(
-    name=name,
+    name=PYPI_PACKAGE_NAME,
     version=_version,
     long_description_content_type='text/x-rst',
 
@@ -33,9 +33,9 @@ setup(
     install_requires=requirements,
 
     project_urls=OrderedDict([
-        ("Issue Tracker", f'{source_code_repo}/issues'),
-        ("Changelog", changelog),
-        ("Source", source_code_repo),
+        ("Issue Tracker", f'{SOURCE_CODE_REPO_SITE}/issues'),
+        ("Changelog", CHANGELOG),
+        ("Source", SOURCE_CODE_REPO_SITE),
         # ("Documentation", "https://pydoer.readthedocs.io/en/v{}/".format(_version)),
     ]),
 
@@ -45,7 +45,7 @@ setup(
         ]
     },
 
-    # Folder where unittest.TestCase-like written modules reside. Specifying this argument enables use of the test command
+    # Folder where modules, with unit-test code, reside. Specifying this argument enables use of the test command
     # to run the specified test suite, e.g. via setup.py test.
     test_suite='tests',
 
@@ -64,23 +64,6 @@ setup(
         'Topic :: Utilities'
     ],
 
-    download_url='https://github.com/boromir674/doer/archive/v{}.tar.gz'.format(_version),  # help easy_install do its tricks
-
-
-
-    # A string or list of strings specifying what other distributions need to be present in order for the setup script to run.
-    # (Note: projects listed in setup_requires will NOT be automatically installed on the system where the setup script is being run.
-    # They are simply downloaded to the ./.eggs directory if they're not locally available already. If you want them to be installed,
-    # as well as being available when the setup script is run, you should add them to install_requires and setup_requires.)
-    # setup_requires=[],
-
-    # package_data={
-    #     # If any package contains *.txt or *.rst files, include them:
-    #     '': ['*.txt', '*.rst'],
-    #     'music_album_creation.format_classification': ['data/*.txt', 'data/model.pickle'],
-    # },
-
-    # A dictionary mapping names of "extras" (optional features of your project: eg imports that a console_script uses) to strings or lists of strings
-    # specifying what other distributions must be installed to support those features.
-    # extras_require={},
+    # help easy_install do its tricks
+    download_url='https://github.com/boromir674/doer/archive/v{}.tar.gz'.format(_version),
 )
