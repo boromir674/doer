@@ -21,6 +21,10 @@ class MenuConfig:
     subtitle: str = attr.ib()
     item_tasks: Iterable[ItemTask] = attr.ib()
 
+    @property
+    def options(self):
+        return self.item_tasks
+
     def __attrs_post_init__(self):
         for task in self.item_tasks:
             for terminal in task.terminal_designs:

@@ -4,13 +4,13 @@
     "terminals": [
 
         {
-            "name": "SO_MAGIC_DEV",
+            "title": "SO_MAGIC_DEV",
             "commands": [
                 "python --version"
             ]
         },
         {
-            "name": "PYTHON",
+            "title": "PYTHON",
             "commands": [
                 "python --version"
             ]

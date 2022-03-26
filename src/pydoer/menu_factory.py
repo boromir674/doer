@@ -28,14 +28,7 @@ class MenuFactory:
     def _create(cls, task_files: Iterable[str], master_file: Union[str, None]=None):
         task_designs = [TaskDesignFactory.from_json_file(x) for x in task_files]
         config = configparser.ConfigParser()
-        f = os.path.join(MY_DIR, 'defaults.cfg')
-        print('FILE', f)
-        config.read(f)
-        print('CONFIG', config)
-        for k, v in config.items():
-            print(k, v)
-        for k, v in config['DEFAULT'].items():
-            print(k, v)
+        config.read(os.path.join(MY_DIR, 'defaults.cfg'))
         data = {
             'title': config['menu_design']['title'],
             'subtitle': config['menu_design']['subtitle'],
@@ -43,8 +36,8 @@ class MenuFactory:
         }
         if master_file:
             try:
-                with open(master_file, 'r') as master_file_like:
-                    master_data = json.load(master_file_like)
+                with open(master_file, 'r') as _master_file:
+                    master_data = json.load(_master_file)
                     data.update(master_data)
             except Exception as error:
                 raise error

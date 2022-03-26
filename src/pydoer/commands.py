@@ -92,5 +92,9 @@ class IpythonCommands(CommandsBuilder):
 class CustomCommands(CommandsBuilder):
     @classmethod
     def build_commands(cls, *args, **kwargs):
+        print('\nBUILD COMMANDS')
+        print('args:', args)
+        print('TYPE', type(args))
         commands_list = args[0]
+        print(type(commands_list))
         return commands_list

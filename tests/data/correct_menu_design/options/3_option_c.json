@@ -4,7 +4,7 @@
     "terminals": [
 
         {
-            "name": "SO_MAGIC_DEV",
+            "title": "SO_MAGIC_DEV",
             "root": "/",
             "commands": [
                 "python --version"

@@ -17,6 +17,7 @@ class ScriptGenerator:
             file_path (str): path to the destination file
             commands (list): list of strings
         """
+        print('SCRIPT PATH:', file_path)
         with open(file_path, 'w') as f:
             f.write('\n'.join(commands))
 
@@ -38,12 +39,17 @@ class ScriptGenerator:
             target_path (str): path to the destination file
             global_rc_file_path (str, optional): [description]. Defaults to ''.
         """
-        cls.create_script_file(
-            target_path,
-            list(cls._common_commands(
+        common_commands = cls._common_commands(
                 terminal_type.upper(),
-                global_rc_file_path=global_rc_file_path)) + \
-                CmdBuilder.subclasses.get(terminal_type, CmdBuilder.subclasses['mpeta']).build_commands(*args))
+                global_rc_file_path=global_rc_file_path)
+        print('\nDEBUG', [f'{x}-{type(x)}' for x in common_commands])
+        common_commands = list(common_commands)
+        
+        commands = CmdBuilder.subclasses.get(terminal_type, CmdBuilder.subclasses['mpeta']).build_commands(*args)
+        print('\nDEBUG', [f'{x}-{type(x)}' for x in commands])
+
+        cls.create_script_file(
+            target_path, common_commands + commands)
 
     @classmethod
     def _common_commands(cls, terminal_title: str, global_rc_file_path='') -> Iterable:

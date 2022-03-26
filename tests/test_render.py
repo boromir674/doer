@@ -18,6 +18,28 @@ def menu_design_data(request, test_suite_data_dir):
     })
 
 
-def test_menu_design(menu_design_data, cli_runner):
-    response = cli_runner.invoke(menu, [menu_design_data.menu_design_file])
+def test_cli(menu_design_data, cli_runner):
+    response = cli_runner.invoke(menu, [menu_design_data.menu_design_folder ])
     assert response.exit_code == menu_design_data.expected_exit_code
+
+
+@pytest.fixture
+def create_menu():
+    from pydoer.menu_renderer import MenuRenderer
+    class ToyListener:
+        def update(self, *args, **kwargs):
+            print('L')
+    menu_renderer = MenuRenderer(
+        ToyListener(),
+    )
+    options_dir = lambda x: os.path.join(x, 'options')
+    return lambda design_root_dir: menu_renderer.construct_menu_1(
+        [os.path.join(options_dir(design_root_dir), x) for x in os.listdir(options_dir(design_root_dir))],
+        master_file=os.path.join(design_root_dir, 'menu.json')
+    )
+
+
+def test_menu_renderer(create_menu, menu_design_data):
+    create_menu(
+        menu_design_data.menu_design_folder
+    )

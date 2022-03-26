@@ -12,6 +12,6 @@ class TerminalDesignType(Protocol):
 
 @attr.s
 class TaskDesign:
-    title: str = attr.ib()
+    name: str = attr.ib()
     root: str = attr.ib()
     terminal_designs: Iterable[TerminalDesignType] = attr.ib()

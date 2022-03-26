@@ -76,20 +76,21 @@ class MenuRenderer:
     def construct_menu_1(self, task_files: Iterable[str], master_file=None):
         from pydoer.menu_factory import MenuFactory
         menu = MenuFactory.create(task_files, master_file=master_file)
-        console_menu = ConsoleMenu(menu.title, menu.subtitle)
+        self.console_menu = ConsoleMenu(menu.title, menu.subtitle)
         
         # Create the Doer Menu options and bind commands
         for task in menu.item_tasks:
             script_path = self._create_bash_script(task)
-            command = MyCommandItem(task.title, 'bash {}'.format(script_path))
+            command = MyCommandItem(task.name, 'bash {}'.format(script_path))
             command.subject.attach(self.terminal_spawn_listener)
-            console_menu.append_item(command)
+            self.console_menu.append_item(command)
 
         # Create the last Doer Menu option, that closes opened windows
-        console_menu.append_item(FunctionItem('Close Opened Windows', windows_manager.close_all))
+        self.console_menu.append_item(FunctionItem('Close Opened Windows', windows_manager.close_all))
 
+    def show(self):
         try:
-            console_menu.show()
+            self.console_menu.show()
         except KeyboardInterrupt:
             print('\nExiting..')
             sys.exit(1)
@@ -106,30 +107,20 @@ class MenuRenderer:
         Returns:
             str: path of the shell script stored in the disk
         """
-        script_path = self._path(entry_data._id)
-        # create a 'do' script that spawns a new terminal, upon execution
+        script_path = self._path(entry_data.name)
+        # create a script that holds one or more commands that spawn a new
+        # terminal application (spawn commands)
         self._spawner.create_script_file(script_path,
                                          reduce(lambda i, j: i + j,
-                                                [self._commands(entry_data._id, terminal.window_title, try_rename_again=True)
+                                                [self._commands(entry_data.name, terminal.window_title, try_rename_again=True)
                                                  for terminal in entry_data.terminal_designs]
                                                 ))
         for terminal in entry_data.terminal_designs:
-            # arguments = [terminal.commands]
-            # arguments[0] = [cmd('cd', terminal['root'])] + terminal.commands
-
-            arguments = [[cmd('cd', terminal['root'])] + terminal.commands]
-
-            # if 'commands' in terminal:
-            #     arguments = [terminal.commands]
-            #     if 'root' in terminal_data:
-            #         arguments[0] = [cmd('cd', terminal_data['root'])] + arguments[0]
-            # else:
-            #     if terminal_data['type'] not in ('git', 'ipython'):
-            #         arguments = [[cmd('cd', terminal_data['root'])]]
-            #     else:
-            #         arguments = [_ for _ in [terminal_data.get('root'), terminal_data.get('interpreter_version')] if _]
+            arguments = [[cmd('cd', terminal.root)] + terminal.commands]
             # Create a 'launch' script that should run on a newly spawned terminal.
-            self._spawner.create_rc_file(terminal.window_title, self._path(entry_data._id,
+            # each spawn command instructs the new terminal to initially run
+            # a 'launch' script (rc file)
+            self._spawner.create_rc_file(terminal.window_title, self._path(entry_data.name,
                 launcher=terminal.window_title), *arguments, global_rc_file_path=self._doer_rc_file)
         return script_path
 

@@ -47,7 +47,7 @@ def menu(json_path, scripts_dir):
         scripts_directory=scripts_dir
     )
     menu_renderer.construct_menu_1(json_path)
-
+    menu_renderer.show()
 
 if __name__ == '__main__':
     cli()
