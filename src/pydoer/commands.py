@@ -59,7 +59,7 @@ class RegisterTitleSetterCommand(BashCommand):
 
 @BashCommand.register_as_subclass('git-timeline')
 class GitTimelineCommand(BashCommand):
-    _text = 'git log --graph --all --oneline --decorate | head -25'
+    _text = 'git log --graph --oneline --decorate | head -25'
 
 
 cmd = BashCommand.create

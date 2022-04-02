@@ -29,7 +29,6 @@ def generate_terminal_script(rc_script_file_path):
         ],
         'CV',
         'dev',
-        '#!/usr/bin/env bash\n'
         'echo "PYDOER TEST SUITE"\n'
         'echo "GOOD STUFF"'
     ),
