@@ -75,6 +75,10 @@ jobs:
         type: executor
     executor: << parameters.e >>
     steps:
+      - install_tox
+      - install_external_dependencies
+      - install_python_tools
+      - checkout
       - run_tox:
           toxenv: "test"
   test_python37:
