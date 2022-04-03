@@ -1,0 +1,29 @@
+# CONFIGURE BUILD SYSTEM
+
+# In python the "build" step (roughly equivalent to the "compile" step in a compiled language)
+# can vary in terms of the artifact it produces.
+# For example, a build command can be "python setup.py sdist" that produces a sources distribution.
+# Another build command can be "python setup.py bdist_wheel" that produces a binary 'wheel' distribution.
+
+# Whenever such build command is onvoked, the 'environment' (or 'host machine' or 'build system' if you will)
+# is what the below section refers to.
+ 
+# Define python packages that must be present in order to allow invocation of a "build" command
+[build-system]
+requires = ["setuptools >= 60.0.0", "wheel >= 0.37.0"]
+build-backend = "setuptools.build_meta"
+
+# Define how to process the setup.py script (ie setuptools or poetry)
+# We select to process it and make a "build" using the established 'setuptools' python package
+
+
+# CONFIGURE COVERAGE TOOL
+
+[tool.coverage.run]
+source = ["pydoer", "tests"]
+
+
+[tool.coverage.report]
+show_missing = true
+precision = 2
+exclude_lines = ["raise NotImplementedError"]
