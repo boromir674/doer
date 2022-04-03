@@ -1,5 +1,3 @@
-include README.rst
-include CHANGELOG.rst
 include LICENSE
 
 global-exclude *.py[cod] __pycache__ *.so *.dylib
@@ -7,21 +5,7 @@ global-exclude *.py[cod] __pycache__ *.so *.dylib
 # Python modules/files
 
 recursive-include src *.py
-recursive-include tests *.py
 
-include requirements.txt
-
-# app data
-include menu_entries.json
+# app static data
 include src/pydoer/doerrc
-
-# test data
-include tests/invalid-menu-entries-1.json
-
-
-# CI / Test Automation / Lint / Static Analysis
-include .circleci/config.yml
-include tox.ini
-include .coveragerc
-include .prospector.yml
-include .pylintrc
+include src/pydoer/defaults.cfg

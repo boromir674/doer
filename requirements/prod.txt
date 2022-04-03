@@ -1,0 +1,4 @@
+console-menu~=0.6.0
+attrs~=21.2.0
+click~=8.0.1
+software-patterns~=1.0.0

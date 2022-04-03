@@ -74,70 +74,95 @@ You need to have Python, Bash and gnome-terminal installed.
 Installation
 ============
 
+Using `pip` is the approved way for installing `pydoer`.
 
-Install PyDoer in virtual environment:
+The command `pip install pydoer` isntalls the `pydoer` python package
+and adds the cli script in your PATH.
 
-1. Get the code
+Following the below instructions, should place the pydoer cli executable
+in your PATH, assuming that you ensure the ~/.local/bin is in your PATH, if need be.
 
-    git clone git@github.com:boromir674/doer.git
+1. Install PyDoer:
 
-2. Install in a python virtual environment
+   a. Install in a virtual environment (recommended)
+   
+       export PYTHON_VIRTUAL_ENVS_DIR=~python-envs
+       export PYDOER_ENV=$PYTHON_VIRTUAL_ENVS_DIR/pydoer-env
 
-    cd doer
+       mkdir $PYTHON_VIRTUAL_ENVS_DIR
+       cd $PYTHON_VIRTUAL_ENVS_DIR
 
-    virtualenv env --python=python3
-    source env/bin/activate
+       virtualenv $PYDOER_ENV --python=python3
+       source $PYDOER_ENV/bin/activate
 
-    pip install python-doer
+       pip install pydoer
 
+       deactivate
 
-3. Make pydoer cli available in path
-    Assuming ~/.local/bin is in $PATH
+       # make a link to the current user's local bin dir
+       ln -s $PYDOER_ENV/bin/pydoer ~/.local/bin/pydoer
+   
+   Now the pydoer cli should be in ~/local/bin
+   Simply make sure ~/local/bin is in your PATH to easily invoke the cli.
 
+   b. Install for current user
+       
+       pip install --user pydoer
 
-::
+   Now the pydoer cli should be in ~/local/bin
+   Simply make sure ~/local/bin is in your PATH to easily invoke the cli.
 
-    ln -s $PWD/env/bin/pydoer ~/.local/bin/pydoer
+   c. Install (globally) for all users
 
+       sudo pip install pydoer
+   
+   Now the pydoer cli should already be in your PATH.
 
-4. (Optional) Define useful aliases
+2. Check that cli is available
 
-Assuming you cloned the code in directory '/data/repos/doer'
-
-::
-
-    alias doer='/data/repos/doer/env/bin/pydoer menu /data/repos/doer/python-doer/menu_entries.json'
-    alias close-doing='/data/repos/doer/env/bin/pydoer close-doing'
-
-
-Install PyDoer for user:
-
-1. Get the code
-
-    git clone git@github.com:boromir674/doer.git
-
-2. Install for user
-
-    cd doer
-
-    pip install --user python-doer
-
-The pydoer cli should now be (automatically) in $PATH
-
-3. (Optional) Define useful aliases
-
-::
-
-    alias doer='pydoer menu /data/repos/doer/python-doer/menu_entries.json'
-    alias close-doing='pydoer close-doing'
+       pydoer --help
 
 
 Usage
 =====
 
-To run, simply execute (either from within the virtual env or if you installed with user/global scope):
+Firstly, you should `design` your own menu and the tasks you would like to
+automate. Then you should be able to 'feed' your design into `pydoer`,
+which will parse it and render the interactive menu in your terminal.
+
+The `design` comprises of a `menu.json` file along side with an `options`
+folder. In the `options` folder eash menu task is represented by a dedicated file.
+
+See `tests/data/correct_menu_design` for an example of a menu design
+to get started.
+
+Once, finished place both the `menu.json` files and the `optinos` directory
+in the same folder.
+
+1. (Optional) Define useful aliases
+
+Assuming you placed the `design` in the `my_doer_menu` folder:
+
+::
+    export MY_DOER_MENU=my_doer_menu
+
+
+Assuming that `pydoer` is in your PATH (see Installation above)
+you can define useful aliases as follows:
+
+::
+
+    alias doer='pydoer menu $MY_DOER_MENU'
+    alias close-doing='/data/repos/doer/env/bin/pydoer close-doing'
+
+
+To run, simply execute:
 
     pydoer
+
+
+How it works
+============
 
 Basically you have 2 commands:
     1. show interactive menu
@@ -146,7 +171,7 @@ Basically you have 2 commands:
 
             pydoer menu </path/to/menu.json>
 
-        The program parses the entries defined in json formatted file defined by the user json' file and renders
+        The program parses the entries defined in the json formatted files defined by the user and renders
         an interactive "Menu" in the terminal, waiting for the user to make a selection.
         Each selection, generates a 'do' script which is responsible for opening/spawning one or more terminal applications.
         For each terminal application, a 'launch' script is generated which is responsible for running certain commands on that terminal.
