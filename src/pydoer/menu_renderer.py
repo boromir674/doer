@@ -1,6 +1,5 @@
 import os
 import sys
-from typing import Iterable
 
 from consolemenu import ConsoleMenu
 from consolemenu.items import FunctionItem
@@ -8,6 +7,7 @@ from software_patterns import Observer
 
 from pydoer.doer_launcher_script_generator import TerminalBootstrapScriptGenerator
 from pydoer.doer_task_script_generator import TaskScriptGenerator
+from pydoer.menu_factory import MenuFactory
 
 from .console_command import MyCommandItem
 from .windows_manager_instance import windows_manager
@@ -55,12 +55,10 @@ class MenuRenderer:
             self._my_dir,
             self._doer_rc_file,
         )
+        self.console_menu = None
 
     def get_menu(self, design_dir: str):
-        options_dir = os.path.join(design_dir, 'options')
-        task_files = [os.path.join(options_dir, x) for x in os.listdir(options_dir)]
-        master_file = os.path.join(design_dir, 'menu.json')
-        return self.construct_menu_1(task_files, master_file=master_file)
+        return self.construct_menu_1(design_dir)
 
     def show(self):
         try:
@@ -69,11 +67,10 @@ class MenuRenderer:
             print('\nExiting..')
             sys.exit(1)
 
-    def construct_menu_1(self, task_files: Iterable[str], master_file=None):
-        from pydoer.menu_factory import MenuFactory
-        menu = MenuFactory.create(task_files, master_file=master_file)
+    def construct_menu_1(self, design_dir: str):
+        menu = MenuFactory.create(design_dir)
         self.console_menu = ConsoleMenu(menu.title, menu.subtitle)
-        
+
         # Create the Doer Menu options and bind commands
         for task in menu.item_tasks:
             script_path = self._create_do_script(task)
@@ -96,7 +93,7 @@ class MenuRenderer:
             str: path of the shell script stored in the disk
         """
         self._terminal_script_generator.task_name = task.name
-        
+
         # Generate Task (aka do) script
         do_script: str = self._generate_task_script(task)
 

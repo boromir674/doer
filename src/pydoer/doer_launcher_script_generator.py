@@ -21,8 +21,8 @@ class TerminalBootstrapScriptGenerator:
         # create string 'commands' such as banshee string, cd to root dir, etc
         common_commands = CommonCommands.create('bash',
             terminal_design.window_title.upper(),
-            self.global_rc_file,
-            terminal_design.root
+            global_rc_file_path=self.global_rc_file,
+            root_path=terminal_design.root
         )
 
         return self.generator.generate(

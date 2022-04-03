@@ -22,5 +22,3 @@ class TaskScriptPathFinder:
         return os.path.join(
             self.root_dir,
             'do-' + task_name.replace(" ", "-") + '.sh')
-
-

@@ -7,7 +7,9 @@ from pydoer.script_generator import ScriptGeneratorInterface
 
 class FileScriptGenerator(ScriptGeneratorInterface):
 
-    def generate(self, content: str, file_path, *args, **kwargs):
+    def generate(self, *args, **kwargs):
+        content: str = args[0]
+        file_path: str = args[1]
         with open(file_path, 'w') as _file:
             _file.write(content)
         return file_path

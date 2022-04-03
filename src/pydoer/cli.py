@@ -11,7 +11,6 @@ MY_DIR = os.path.dirname(os.path.realpath(__file__))
 bash_scripts_dir_path = os.path.join(MY_DIR, 'generated_bash_scripts')
 
 
-
 @click.group()
 def cli():
     pass

@@ -5,52 +5,58 @@ import pytest
 
 @pytest.fixture
 def rc_script_file_path(tmp_path):
-    def get_file_path(option_name: str, task_name: str):
-        return os.path.join(tmp_path, f'do-{option_name}-{task_name}.sh')
+    from pydoer.script_name import LaunchScriptPathFinder
+    path_getter = LaunchScriptPathFinder(tmp_path)
+    def get_file_path(task_name: str, terminal_name: str):
+        return path_getter.path(task_name, terminal_name)
     return get_file_path
 
 
 @pytest.fixture
-def generate_terminal_script(rc_script_file_path):
-    from pydoer.terminal_spawner import ScriptGenerator
-    def generate_rc_script(commands, option_name, task_name):
-        file_path = rc_script_file_path(option_name, task_name)
-        ScriptGenerator.create_rc_file(
-            task_name, file_path, commands
-        )
-        return file_path
+def generate_terminal_script(rc_script_file_path, tmp_path):
+    from pydoer.doer_task_script_generator import TaskScriptGenerator
+    from pydoer.task_design import TaskDesign
+    from pydoer.terminal_design import TerminalDesign
+    script_generator = TaskScriptGenerator(tmp_path)
+    def generate_rc_script(commands, task_name, terminal_name):
+        task_design = TaskDesign(task_name, None, [  # a task with 1 terminal spawned
+            TerminalDesign(commands, None, terminal_name)
+        ])
+        return script_generator.generate(task_design)
     return generate_rc_script
 
 
-@pytest.mark.parametrize('commands, option_name, task_name, script_content', (
+@pytest.mark.parametrize('task_name, terminal_name, commands, script_content', (
     (
+        'CV',
+        'dev',
         [
             'echo "PYDOER TEST SUITE"',
             'echo "GOOD STUFF"'
         ],
-        'CV',
-        'dev',
-        'echo "PYDOER TEST SUITE"\n'
-        'echo "GOOD STUFF"'
+        # expected do script contents
+        'gnome-terminal -e "bash --rcfile {root_dir}/launch-CV-DEV.sh"\n'
+        'wmctrl -r Terminal -N DEV'
     ),
 
 ))
 def test_terminal_script_generation(
         commands,
-        option_name,
         task_name,
+        terminal_name,
         script_content,
-        generate_terminal_script
+        generate_terminal_script,
+        tmp_path
     ):
     file_path = generate_terminal_script(
         commands,
-        option_name,  # menu option
-        task_name  # terminal
+        task_name,  # menu option
+        terminal_name  # terminal
     )
-    assert os.path.basename(file_path) == f'do-{option_name}-{task_name}.sh'
+
     assert os.path.exists(file_path)
     
     with open(file_path, 'r') as do_script:
         contents = do_script.read()
     
-    assert contents == script_content
+    assert contents == script_content.format(root_dir=tmp_path)

@@ -8,7 +8,7 @@ class WindowManagerProtocol(Protocol):
     windows: dict
 
     def remember(self) -> None: ...
- 
+
 
 @attr.s
 class SpawnListener(Observer):

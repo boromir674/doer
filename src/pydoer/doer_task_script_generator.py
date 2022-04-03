@@ -54,7 +54,7 @@ class TaskScriptGenerator:
             self._spawn_terminal_cmd(rc_file_path),
             self._rename_terminal_window_cmd(title)
         ]
-    
+
     def _commands(self, rc_file_path: str):
         return [
             self._spawn_terminal_cmd(rc_file_path),

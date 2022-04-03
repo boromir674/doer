@@ -12,10 +12,9 @@ class BashCommonCommands(CommonCommands):
 
     def __new__(
         cls,
-        terminal_title: str,
+        terminal_title: str, *,
         global_rc_file_path: str = '',
         root_path: str = '',
-        *args,
         **kwargs
     ):
         return list(filter(None, [

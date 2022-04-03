@@ -4,9 +4,10 @@ import pytest
 
 
 @pytest.fixture
-def generate_file():
-    from pydoer.terminal_spawner import ScriptGenerator
-    return ScriptGenerator.create_script_file
+def generate_file(tmp_path):
+    from pydoer.doer_script_generator import DoerScriptGenerator
+    script_generator = DoerScriptGenerator(tmp_path)
+    return lambda file_name, iter_commands: script_generator.generate('\n'.join(iter_commands), file_name)
 
 
 @pytest.mark.parametrize('commands, script_content', (
@@ -27,8 +28,7 @@ def generate_file():
     ),
 ))
 def test_file_generation(commands, script_content, generate_file, tmp_path):
-    file_path = os.path.join(tmp_path, 'test_terminal_script')
-    generate_file(file_path, commands)
+    file_path = generate_file('test_terminal_script', commands)
     assert os.path.exists(file_path)
 
     with open(file_path, 'r') as script_file:

@@ -18,7 +18,7 @@ class TaskDesignFactory:
     def from_json(cls, json_string: str):
         data_dict = json.loads(json_string)
         return cls.from_dict(data_dict)
-    
+
     @classmethod
     def from_dict(cls, data: dict):
         return TaskDesign(
