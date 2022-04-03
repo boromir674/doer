@@ -1,6 +1,5 @@
 version: 2.1
 
-
 executors:
 
   python-docker: # declares a reusable executor that dynamically "picks" python version
@@ -52,69 +51,28 @@ commands:
           name: Install the latest pip and wheel python packages
           command: pip install -U pip wheel
 
-  run_tox:
-    description: "Run tox."
-    parameters:
-      toxenv:
-        default: "dev-test-cov"
-        type: string
-      python:
-        default: "python"
-        type: string
+  handle_test_suite_run_data:
+    description: Process the output (artifact) files of a "run" on the test suite, containing test results/coverage.
     steps:
-      - run: python --version
-      - run:
-          name: Run tox
-          command: TOXENV=<<parameters.toxenv>> TOXPYTHON=<<parameters.python>> tox -vv
-
-
-jobs:
-  try_test:
-    parameters:
-      e:
-        type: executor
-    executor: << parameters.e >>
-    steps:
-      - install_tox
-      - install_external_dependencies
-      - install_python_tools
-      - checkout
-      - run_tox:
-          toxenv: "test"
-  test_python37:
-    executor: py37-docker-image
-    steps:
-      - run_tox:
-          toxenv: "py37"
-  test_python39:
-    executor: py39-docker-image
-    steps:
-      - run_tox:
-          toxenv: "py39"
-  build_n_test:
-    executor: py38-docker-image
-    steps:
-      - run_tox:
-          toxenv: "py38-cov"
       - store_test_results:  # Upload test results for display in Test Summary: https://circleci.com/docs/2.0/collect-test-data/
           path: test-results
       - store_artifacts:
           path: test-results
-      # currently the 'test-results' path (define above) must match the TEST_RESULTS_DIR env variable found in circleci web site
       - store_artifacts:
           path: .coverage
-      - run:
-          name: Manually install the python py package
-          command: python -m pip install py
-      - run:
-          name: Transform test results into 2 formats; html & xml
-          command: python -m tox -e format-report -vv
+
+  store_test_results_html_and_xml_artifacts:
+    description: Render test results on app.circle.com pipeline web page.
+    steps:
       - store_artifacts:
           path: coverage.xml
       - store_artifacts:
           path: htmlcov
           destination: htmlcov
-      # Persist the specified paths (eg .coverage and tox.ini) into the workspace for use in proceeding job.
+
+  persist_test_results_to_workspace:
+    description: Persist to workspace test files, tox.ini and .git, so that subsequent job can access them.
+    steps:
       - persist_to_workspace:
           # Must be an absolute path, or relative path from working_directory. This is a directory on the container which is
           # taken to be the root directory of the workspace.
@@ -124,7 +82,42 @@ jobs:
             - coverage.xml
             - .coverage
             - tox.ini
-            - .git
+            - .git 
+
+jobs:
+
+  install_and_test:
+    parameters:
+      e:
+        type: executor
+    executor: <<parameters.e>>
+    steps:
+      - install_tox
+      - install_external_dependencies
+      - install_python_tools
+      - checkout
+      - run: TOXPYTHON=python TOXENV=test tox -vv
+
+  build_n_test:
+    executor: py38-docker-image
+    steps:
+      - install_tox
+      - install_external_dependencies
+      - install_python_tools
+      - checkout
+      - run: TOXPYTHON=python TOXENV=py38-cov tox -vv
+      - handle_test_suite_run_data
+      
+      - run:
+          name: Manually install the python py package
+          command: python -m pip install py
+      - run:
+          name: Transform test results into 2 formats; html & xml
+          command: python -m tox -e format-report -vv
+      - store_test_results_html_and_xml_artifacts
+      # Persist the specified paths (eg .coverage and tox.ini) into the workspace for use in proceeding job.
+      - persist_test_results_to_workspace
+  
 
   send-coverage-to-codacy:
     executor: java15-docker-image
@@ -170,7 +163,7 @@ jobs:
           name: Deploy package (source distro & wheel) to 'testpypi' (index) server
           command: |
             export PYDOER_RELEASE_VERSION=$(python -c 'import re; f = open("src/pydoer/__init__.py"); c = f.read(); m = re.search(r"__version__[\s\ ]*=[\s\ ]*.(\d+(?:\.\d+)*)", c); print(m.group(1)); f.close()')
-            python -m tox -e deploy -vv
+            tox -e deploy -vv
 
   visualize_dependency_graphs:
     executor: py38-docker-image
@@ -202,14 +195,36 @@ workflows:
   version: 2
   build_accept:
     jobs:
-      - try_test:
+      # - install_and_test:
+          # matrix:
+          #   parameters:
+          #     e: ["3.7.12", "3.8.12", "3.9.7"]  
+      - install_and_test:
+          e:
+            name: python-docker
+            version: "3.7.12"
+          filters:
+            tags:
+              only: /.*/  # runs for all branches and all tags 
+      - install_and_test:
           e:
             name: python-docker
             version: "3.8.12"
+          filters:
+            tags:
+              only: /.*/  # runs for all branches and all tags 
+      - install_and_test:
+          e:
+            name: python-docker
+            version: "3.9.7"
+          filters:
+            tags:
+              only: /.*/  # runs for all branches and all tags 
+      
       # - test_python37:
-      #     filters:
-      #       tags:
-      #         only: /.*/  # runs for all branches and all tags
+          # filters:
+          #   tags:
+          #     only: /.*/  # runs for all branches and all tags
       # - test_python39:
       #     filters:
       #       tags:
