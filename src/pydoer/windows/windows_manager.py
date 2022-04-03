@@ -5,7 +5,7 @@ from pydoer.persistance import PersistanceManager
 from .windows import Window
 
 
-__all__ = ['win_manager']
+__all__ = ['WindowsManager']
 
 
 @attr.s

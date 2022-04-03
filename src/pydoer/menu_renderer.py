@@ -99,8 +99,6 @@ class MenuRenderer:
         
         # Generate Task (aka do) script
         do_script: str = self._generate_task_script(task)
-        with open('/tmp/doer', 'w') as ff:
-            ff.write(f'DO SCRIPT PATH: ' + str(do_script) + '\n')
 
         # Generate Terminal (aka launch) script(s)
         for terminal in task.terminal_designs:

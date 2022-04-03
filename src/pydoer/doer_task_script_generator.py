@@ -1,4 +1,3 @@
-import os
 from functools import reduce
 from typing import Optional
 
@@ -21,8 +20,6 @@ class TaskScriptGenerator:
         self.script_generator = DoerScriptGenerator(self.output_dir)
         self.do_script_path_finder = TaskScriptPathFinder(self.output_dir)
         self.launch_script_path_finder = LaunchScriptPathFinder(self.output_dir)
-
-    # rc_file_path: str = attr.ib()
 
     def generate(self, task_design):
 

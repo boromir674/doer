@@ -1,6 +1,6 @@
 """Module for representing/reading the user design of a terminal."""
 
-from typing import Dict, Iterable, Protocol, Union, Optional
+from typing import Iterable, Protocol, Union
 import attr
 import json
 
