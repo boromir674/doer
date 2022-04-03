@@ -4,16 +4,7 @@ import pytest
 
 
 @pytest.fixture
-def rc_script_file_path(tmp_path):
-    from pydoer.script_name import LaunchScriptPathFinder
-    path_getter = LaunchScriptPathFinder(tmp_path)
-    def get_file_path(task_name: str, terminal_name: str):
-        return path_getter.path(task_name, terminal_name)
-    return get_file_path
-
-
-@pytest.fixture
-def generate_terminal_script(rc_script_file_path, tmp_path):
+def generate_terminal_script(tmp_path):
     from pydoer.doer_task_script_generator import TaskScriptGenerator
     from pydoer.task_design import TaskDesign
     from pydoer.terminal_design import TerminalDesign

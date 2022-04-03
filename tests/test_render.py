@@ -16,24 +16,8 @@ def menu_design_data(request, test_suite_data_dir):
         'expected_exit_code': request.param[1],
     })
 
-
-"""        runner: "CliRunner",
-        stdout_bytes: bytes,
-        stderr_bytes: t.Optional[bytes],
-        return_value: t.Any,
-        exit_code: int,
-        exception: t.Optional[BaseException],
-        exc_info: t.Optional[
-            t.Tuple[t.Type[BaseException], BaseException, TracebackType]
-        ] = None,
-    ):"""
-
 def test_cli(menu_design_data, cli_runner, scripts_dir):
     response = cli_runner.invoke(menu, [menu_design_data.menu_design_folder, '--scripts-dir', scripts_dir])
-    print('\nSTDOUT\n', str(response.stdout_bytes, encoding='utf-8'))
-    if hasattr(response, 'stderr_bytes') and response.stderr_bytes:
-        print(type(response.stderr_bytes))
-        print('\nSTDERR\n', str(response.stderr_bytes, encoding='utf-8'))
     print('\nSTDEXIT_CODE\n', str(response.exit_code))
     print('\nEXCEPTION\n', str(response.exception))
     print('\nEXCEPTION_INFO\n', str(response.exc_info))

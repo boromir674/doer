@@ -49,9 +49,3 @@ def test_find_windows(monkeypatch, window):
     monkeypatch.setattr(subprocess, 'run', get_emulated_child_process)
     open_windows = window.find_open_windows()
     assert type(open_windows) == list
-
-
-# def test_encode
-
-
-# def test_decode
