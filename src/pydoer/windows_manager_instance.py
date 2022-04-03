@@ -1,6 +1,5 @@
 from .windows import WindowsManager
 
-
 __all__ = ['windows_manager']
 
 

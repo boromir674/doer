@@ -1,8 +1,9 @@
+from typing import Protocol
+
 import attr
 from software_patterns import Observer
 
 
-from typing import Protocol
 class WindowManagerProtocol(Protocol):
     windows: dict
 

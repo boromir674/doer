@@ -4,8 +4,8 @@ import pytest
 @pytest.fixture
 def window():
     """Objects related to testing windows-related infrastructure."""
-    from pydoer.windows.windows import Window
     from pydoer.init_find_open_windows import find_open_windows
+    from pydoer.windows.windows import Window
     return type('WindowsModule', (), {
         '_class': Window,
         'find_open_windows': find_open_windows,

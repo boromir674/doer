@@ -1,11 +1,11 @@
 import os
 import sys
+
 import click
 
-from .windows_manager_instance import windows_manager
 from .menu_renderer import MenuRenderer
 from .window_spawn_listener import SpawnListener
-
+from .windows_manager_instance import windows_manager
 
 MY_DIR = os.path.dirname(os.path.realpath(__file__))
 bash_scripts_dir_path = os.path.join(MY_DIR, 'generated_bash_scripts')

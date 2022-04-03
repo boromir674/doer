@@ -1,4 +1,5 @@
 from time import sleep
+
 from consolemenu.items import CommandItem
 from software_patterns import Subject
 

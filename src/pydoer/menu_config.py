@@ -1,8 +1,9 @@
 """Module for reading a design of a Menu (static assets & items)."""
 
+import json
 import os
 from typing import Iterable, Protocol
-import json
+
 import attr
 
 

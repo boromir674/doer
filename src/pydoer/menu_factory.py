@@ -1,11 +1,10 @@
 import configparser
-import os
 import json
+import os
 from typing import Iterable, Union
 
 from .menu_config import MenuConfig
 from .task_design_factory import TaskDesignFactory
-
 
 MY_DIR = os.path.dirname(os.path.realpath(__file__))
 

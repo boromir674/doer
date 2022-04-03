@@ -1,7 +1,8 @@
 import os
-import pytest
-from pydoer.cli import menu
 
+import pytest
+
+from pydoer.cli import menu
 
 this_file_parent_dir = os.path.dirname(os.path.realpath(__file__))
 

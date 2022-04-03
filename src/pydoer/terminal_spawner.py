@@ -1,8 +1,9 @@
 import os
-from typing import Union, Iterable
+from typing import Iterable, Union
 
-from .commands import CommandsBuilder as CmdBuilder, cmd, BashCommand
-
+from .commands import BashCommand
+from .commands import CommandsBuilder as CmdBuilder
+from .commands import cmd
 
 SourceCommandType = Union[BashCommand, None]
 

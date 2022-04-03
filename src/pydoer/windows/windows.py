@@ -2,7 +2,6 @@ import re
 
 import attr
 
-
 __all__ = ['Window']
 
 

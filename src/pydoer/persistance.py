@@ -1,6 +1,6 @@
 import os
-import attr
 
+import attr
 
 my_dir = os.path.dirname(os.path.realpath(__file__))
 PERSIST_FILE_NAME = '.windows_opened_by_doer.txt'

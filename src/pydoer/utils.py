@@ -1,6 +1,7 @@
 from __future__ import annotations
+
 import subprocess
-from typing import List, Protocol, Callable
+from typing import Callable, List, Protocol
 
 __all__ = ['find_open_windows']
 

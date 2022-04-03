@@ -1,9 +1,10 @@
 import subprocess
+
 import attr
 
 from pydoer.persistance import PersistanceManager
-from .windows import Window
 
+from .windows import Window
 
 __all__ = ['WindowsManager']
 

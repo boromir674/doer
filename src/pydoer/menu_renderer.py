@@ -6,11 +6,11 @@ from consolemenu import ConsoleMenu
 from consolemenu.items import FunctionItem
 from software_patterns import Observer
 
-from .console_command import MyCommandItem
-from .windows_manager_instance import windows_manager
-
 from pydoer.doer_launcher_script_generator import TerminalBootstrapScriptGenerator
 from pydoer.doer_task_script_generator import TaskScriptGenerator
+
+from .console_command import MyCommandItem
+from .windows_manager_instance import windows_manager
 
 
 class MenuRenderer:

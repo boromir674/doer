@@ -3,7 +3,6 @@ import json
 from pydoer.task_design import TaskDesign
 from pydoer.terminal_design import TerminalDesign
 
-
 __all__ = ['TaskDesignFactory']
 
 

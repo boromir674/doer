@@ -1,6 +1,7 @@
 """Module for representing a user design for a task (menu option)."""
 
-from typing import Iterable, Protocol, Optional
+from typing import Iterable, Optional, Protocol
+
 import attr
 
 
