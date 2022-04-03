@@ -3,7 +3,9 @@ import pytest
 
 @pytest.fixture
 def window():
-    from pydoer.windows import Window, find_open_windows
+    """Objects related to testing windows-related infrastructure."""
+    from pydoer.init_find_open_windows import find_open_windows
+    from pydoer.windows.windows import Window
     return type('WindowsModule', (), {
         '_class': Window,
         'find_open_windows': find_open_windows,
@@ -35,7 +37,6 @@ def test_window_comparison(window):
 
 
 def test_find_windows(monkeypatch, window):
-    # TODO build a mock of the output of a sucessful wmctrl -lx command
     import subprocess
     mocked_suceeded_wmctrl_child_process = type('MockedSuceededWmctrlChildProcess', (), {
         'returncode': 0,
@@ -48,10 +49,3 @@ def test_find_windows(monkeypatch, window):
     monkeypatch.setattr(subprocess, 'run', get_emulated_child_process)
     open_windows = window.find_open_windows()
     assert type(open_windows) == list
-    print(open_windows)
-
-
-# def test_encode
-
-
-# def test_decode

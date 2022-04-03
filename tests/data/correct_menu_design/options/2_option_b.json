@@ -1,0 +1,21 @@
+{
+    "name": "Option 2",
+    "root": "/tmp",
+    "terminals": [
+
+        {
+            "title": "SO_MAGIC_DEV",
+            "root": "/",
+            "commands": [
+                "python --version"
+            ]
+        },
+        {
+            "title": "PYTHON",
+            "commands": [
+                "python --version"
+            ]
+        }
+
+    ]
+}

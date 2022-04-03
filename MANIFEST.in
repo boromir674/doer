@@ -11,9 +11,10 @@ recursive-include tests *.py
 
 include requirements.txt
 
-# app data
+# app static data
 include menu_entries.json
 include src/pydoer/doerrc
+include src/pydoer/defaults.cfg
 
 # test data
 include tests/invalid-menu-entries-1.json

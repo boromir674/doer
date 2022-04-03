@@ -41,13 +41,9 @@ setup(
 
     entry_points={
         'console_scripts': [
-            'pydoer = pydoer.menu_creator:cli',
+            'pydoer = pydoer.cli:cli',
         ]
     },
-
-    # Folder where modules, with unit-test code, reside. Specifying this argument enables use of the test command
-    # to run the specified test suite, e.g. via setup.py test.
-    test_suite='tests',
 
     classifiers=[
         'Development Status :: 4 - Beta',

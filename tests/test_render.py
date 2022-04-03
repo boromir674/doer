@@ -1,27 +1,47 @@
 import os
 
 import pytest
-from click.testing import CliRunner
 
-from pydoer.menu_creator import menu
-
+from pydoer.cli import menu
 
 this_file_parent_dir = os.path.dirname(os.path.realpath(__file__))
 
 
 @pytest.fixture(params=[
-    [os.path.join(this_file_parent_dir, '..', 'menu_entries.json'), 0],
-    [os.path.join(this_file_parent_dir, 'invalid-menu-entries-1.json'), 1],
-    ])
-def menu_design_data(request):
+    ['correct_menu_design', 0],
+])
+def menu_design_data(request, test_suite_data_dir):
     return type('TestMenuDesignData', (), {
-        'menu_design_file': request.param[0],
+        'menu_design_folder': os.path.join(test_suite_data_dir, request.param[0]),
         'expected_exit_code': request.param[1],
     })
 
-runner = CliRunner()
-
-
-def test_menu_design(menu_design_data):
-    response = runner.invoke(menu, [menu_design_data.menu_design_file])
+def test_cli(menu_design_data, cli_runner, scripts_dir):
+    response = cli_runner.invoke(menu, [menu_design_data.menu_design_folder, '--scripts-dir', scripts_dir])
+    print('\nSTDEXIT_CODE\n', str(response.exit_code))
+    print('\nEXCEPTION\n', str(response.exception))
+    print('\nEXCEPTION_INFO\n', str(response.exc_info))
     assert response.exit_code == menu_design_data.expected_exit_code
+
+
+@pytest.fixture
+def create_menu(scripts_dir):
+    from pydoer.menu_renderer import MenuRenderer
+    class ToyListener:
+        def update(self, *args, **kwargs): pass
+    menu_renderer = MenuRenderer(
+        ToyListener(),
+        scripts_directory=scripts_dir,
+    )
+    return menu_renderer.get_menu
+
+
+def test_menu_renderer(create_menu, menu_design_data, scripts_dir):
+    create_menu(
+        menu_design_data.menu_design_folder
+    )
+    assert os.path.exists(os.path.join(scripts_dir, 'do-So-Magic.sh'))
+    assert os.path.exists(os.path.join(scripts_dir, 'do-Option-2.sh'))
+    assert os.path.exists(os.path.join(scripts_dir, 'do-Option-3.sh'))
+    assert os.path.exists(os.path.join(scripts_dir, 'launch-Option-3-SO_MAGIC_DEV.sh'))
+    assert os.path.exists(os.path.join(scripts_dir, 'launch-So-Magic-SO_MAGIC_DEV.sh'))

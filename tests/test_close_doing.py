@@ -1,7 +1,6 @@
 from click.testing import CliRunner
 
-from pydoer.menu_creator import close_doing
-
+from pydoer.cli import close_doing
 
 runner = CliRunner()
 
