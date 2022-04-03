@@ -13,3 +13,6 @@ py*-env
 *\.coverage
 *test-results
 *pydoer-dependency-graphs/
+dependency-graphs
+coverage.xml
+build/
