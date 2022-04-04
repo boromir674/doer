@@ -2,24 +2,6 @@ version: 2.1
 
 executors:
 
-  python-docker: # declares a reusable executor that dynamically "picks" python version
-    parameters:
-      version:
-        description: "version tag"
-        default: "3.8.12"
-        type: string
-    docker:
-      - image: cimg/python:<<parameters.version>>
-
-  py37-docker-image:
-    docker:
-      - image: cimg/python:3.7.12
-  py38-docker-image:
-    docker:
-      - image: cimg/python:3.8.12
-  py39-docker-image:
-    docker:
-      - image: cimg/python:3.9.7
   java15-docker-image:
     docker:
       - image: cimg/openjdk:15.0.1
@@ -92,9 +74,6 @@ jobs:
         type: string
     docker:
       - image: cimg/python:<<parameters.py_version>>
-      # e:
-      #   type: executor
-    # executor: <<parameters.e>>
     steps:
       - install_tox
       - install_external_dependencies
@@ -203,6 +182,9 @@ workflows:
           matrix:
             parameters:
               py_version: ["3.7.12", "3.8.12", "3.9.7"]
+          filters:
+            tags:
+              only: /.*/  # runs for all branches and all tags 
 
       # - install_and_test:
       #     e:
