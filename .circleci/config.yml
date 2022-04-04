@@ -88,9 +88,13 @@ jobs:
 
   install_and_test:
     parameters:
-      e:
-        type: executor
-    executor: <<parameters.e>>
+      py_version:
+        type: string
+    docker:
+      - image: cimg/python:<<parameters.py_version>>
+      # e:
+      #   type: executor
+    # executor: <<parameters.e>>
     steps:
       - install_tox
       - install_external_dependencies
@@ -195,31 +199,42 @@ workflows:
   version: 2
   build_accept:
     jobs:
+      - install_and_test:
+          matrix:
+            parameters:
+              py_version: ["3.7.12", "3.8.12", "3.9.7"]
+
       # - install_and_test:
+      #     e:
+      #       name: python-docker
+      #       matrix:
+      #         parameters:
+      #           version: ["3.7.12", "3.8.12", "3.9.7"]
           # matrix:
           #   parameters:
-          #     e: ["3.7.12", "3.8.12", "3.9.7"]  
-      - install_and_test:
-          e:
-            name: python-docker
-            version: "3.7.12"
-          filters:
-            tags:
-              only: /.*/  # runs for all branches and all tags 
-      - install_and_test:
-          e:
-            name: python-docker
-            version: "3.8.12"
-          filters:
-            tags:
-              only: /.*/  # runs for all branches and all tags 
-      - install_and_test:
-          e:
-            name: python-docker
-            version: "3.9.7"
-          filters:
-            tags:
-              only: /.*/  # runs for all branches and all tags 
+          #     e: ["3.7.12", "3.8.12", "3.9.7"]
+
+      # - install_and_test:
+      #     e:
+      #       name: python-docker
+      #       version: "3.7.12"
+      #     filters:
+      #       tags:
+      #         only: /.*/  # runs for all branches and all tags 
+      # - install_and_test:
+      #     e:
+      #       name: python-docker
+      #       version: "3.8.12"
+      #     filters:
+      #       tags:
+      #         only: /.*/  # runs for all branches and all tags 
+      # - install_and_test:
+      #     e:
+      #       name: python-docker
+      #       version: "3.9.7"
+      #     filters:
+      #       tags:
+      #         only: /.*/  # runs for all branches and all tags 
       
       # - test_python37:
           # filters:
